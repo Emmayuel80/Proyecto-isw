@@ -1,0 +1,19 @@
+{
+  "name": "proyecto-isw",
+  "version": "1.0.0",
+  "description": "Proyecto para pasar la materia ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Emmayuel80/Proyecto-isw.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Emmayuel80/Proyecto-isw/issues"
+  },
+  "homepage": "https://github.com/Emmayuel80/Proyecto-isw#readme"
+}
