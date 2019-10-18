@@ -4,7 +4,7 @@
   "description": "Proyecto para pasar la materia ",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --reporter list",
     "start": "node server.js"
   },
   "repository": {
@@ -26,7 +26,8 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "mocha": "^6.2.1"
   },
   "engines": {
     "node": "10.x"
