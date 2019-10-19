@@ -4,7 +4,7 @@
   "description": "Proyecto para pasar la materia ",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --reporter list",
+    "test": "nyc --check-coverage --lines 50 --reporter=text mocha",
     "start": "node server.js"
   },
   "repository": {
@@ -27,7 +27,8 @@
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "mocha": "^6.2.1"
+    "mocha": "^6.2.1",
+    "nyc": "^14.1.1"
   },
   "engines": {
     "node": "10.x"
