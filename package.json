@@ -6,7 +6,8 @@
   "scripts": {
     "test": "nyc --check-coverage --lines 50 --reporter=text mocha",
     "start": "node server.js",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "eslint": "eslint *.js"
   },
   "repository": {
     "type": "git",
