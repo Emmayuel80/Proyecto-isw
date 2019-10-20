@@ -3,6 +3,9 @@
 const assert = require('assert');
 const div = require('../services/division');
 const handleOperation = require('../services/handleOperation');
+//  const mult = require('./multiplicacion');
+const sum = require('../services/suma');
+const res = require('../services/resta');
 describe('divider tests ', function () {
   var _numberA;
   var _numberB;
@@ -24,22 +27,65 @@ describe('divider tests ', function () {
   });
 });
 
-describe('Operation handler test ', function () {
+describe('sum tests ', function () {
   var _numberA;
   var _numberB;
 
-  it('should return the div of 2 numbers', function () {
+  it('should the sum of 2 numbers', function () {
     _numberA = 6;
     _numberB = 2;
-    var result = handleOperation(_numberA, _numberB, '4');
+    var result = sum(_numberA, _numberB);
+
+    assert.strictEqual(result, 8);
+  });
+});
+
+describe('sub tests ', function () {
+  var _numberA;
+  var _numberB;
+
+  it('should the sub of 2 numbers', function () {
+    _numberA = 6;
+    _numberB = 2;
+    var result = res(_numberA, _numberB);
+
+    assert.strictEqual(result, 4);
+  });
+});
+
+describe('Operation handler test ', function () {
+  var _numberA;
+  var _numberB;
+  var result;
+
+  it('should return the div of 2 numbers', function () {
+    _numberA = '6';
+    _numberB = '2';
+    result = handleOperation(_numberA, _numberB, '4');
 
     assert.strictEqual(result, 3);
   });
 
+  it('should return the sum of 2 numbers', function () {
+    _numberA = '4';
+    _numberB = '5';
+    result = handleOperation(_numberA, _numberB, '1');
+
+    assert.strictEqual(result, 9);
+  });
+
+  it('should return the sub of 2 numbers', function () {
+    _numberA = '7';
+    _numberB = '6';
+    result = handleOperation(_numberA, _numberB, '2');
+
+    assert.strictEqual(result, 1);
+  });
+
   it('should return undefined for operation equals 5', function () {
-    _numberA = 2;
-    _numberB = 0;
-    var result = handleOperation(_numberA, _numberB, '5');
+    _numberA = '2';
+    _numberB = '0';
+    result = handleOperation(_numberA, _numberB, '5');
 
     assert.strictEqual(result, undefined);
   });

@@ -67,11 +67,10 @@ $(function () {
   const socket = io();
   $('form').submit(function (e) {
     e.preventDefault(); // prevents page reloading
-    socket.emit('calcutale', $('#numA').val(), $('#numB').val(), $("input[name='options']:checked").val());
-    return false;
+    socket.emit('calculate', $('#numA').val(), $('#numB').val(), $("input[name='options']:checked").val());
   });
   socket.on('result', (result) => {
-      $('#resultado').val(`El resultado es ${result}`);
+      document.getElementById('resultado').innerHTML = (`El resultado es ${result}`);
   });
 });
 </script>
