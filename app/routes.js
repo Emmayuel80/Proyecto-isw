@@ -7,6 +7,6 @@ module.exports = function (app) {
   });
 
   app.get('*', (req, res) => {
-    res.render('not_fount.ejs');
+    res.render('../public/views/not_found.ejs');
   });
 };
