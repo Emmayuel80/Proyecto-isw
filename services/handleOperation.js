@@ -1,5 +1,5 @@
 const div = require('./division');
-//  const mult = require('./multiplicacion');
+const mult = require('./multiplicacion');
 const sum = require('./suma');
 const res = require('./resta');
 module.exports = function (numA, numB, operation) {
@@ -14,7 +14,7 @@ module.exports = function (numA, numB, operation) {
     result = res(numA, numB);
   }
   if (operation === 3) {
-    //  result = mult(numA, numB);
+    result = mult(numA, numB);
   }
   if (operation === 4) {
     result = div(numA, numB);
