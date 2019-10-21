@@ -3,7 +3,7 @@
 const assert = require('assert');
 const div = require('../services/division');
 const handleOperation = require('../services/handleOperation');
-//  const mult = require('./multiplicacion');
+const mult = require('../services/multiplicacion');
 const sum = require('../services/suma');
 const res = require('../services/resta');
 describe('divider tests ', function () {
@@ -81,12 +81,28 @@ describe('Operation handler test ', function () {
 
     assert.strictEqual(result, 1);
   });
+  it('should return 0', function () {
+    _numberA = '2';
+    _numberB = '0';
+    result = handleOperation(_numberA, _numberB, '3');
 
+    assert.strictEqual(result, 0);
+  });
   it('should return undefined for operation equals 5', function () {
     _numberA = '2';
     _numberB = '0';
     result = handleOperation(_numberA, _numberB, '5');
 
     assert.strictEqual(result, undefined);
+  });
+});
+
+describe('test de multiplicacion', () => {
+  var _numberA = '2';
+  var _numberB = '4';
+  it('multiplica 2 numeros', () => {
+    result = mult(_numberA, _numberB);
+
+    assert.strictEqual(result, 8);
   });
 });
