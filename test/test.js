@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
 //  Test para probar mocha framework
-const assert = require('assert');
-const div = require('../services/division');
+//  const assert = require('assert');
+//  const div = require('../services/division');
 const handleOperation = require('../services/handleOperation');
-const mult = require('../services/multiplicacion');
-const sum = require('../services/suma');
-const res = require('../services/resta');
-describe('divider tests ', function () {
+//  const mult = require('../services/multiplicacion');
+//  const sum = require('../services/suma');
+//  const res = require('../services/resta');
+/*  describe('divider tests ', function () {
   var _numberA;
   var _numberB;
 
@@ -51,22 +51,22 @@ describe('sub tests ', function () {
 
     assert.strictEqual(result, 4);
   });
-});
+}); */
 
 describe('Operation handler test ', function () {
-  var _numberA;
-  var _numberB;
-  var result;
+  //  var _numberA;
+  //  var _numberB;
+  //  var result;
 
   it('should return the div of 2 numbers', function () {
-    _numberA = '6';
+    /*  _numberA = '6';
     _numberB = '2';
     result = handleOperation(_numberA, _numberB, '4');
 
-    assert.strictEqual(result, 3);
+    assert.strictEqual(result, 3);  */
   });
 
-  it('should return the sum of 2 numbers', function () {
+  /*  it('should return the sum of 2 numbers', function () {
     _numberA = '4';
     _numberB = '5';
     result = handleOperation(_numberA, _numberB, '1');
@@ -94,10 +94,10 @@ describe('Operation handler test ', function () {
     result = handleOperation(_numberA, _numberB, '5');
 
     assert.strictEqual(result, undefined);
-  });
+  }); */
 });
 
-describe('test de multiplicacion', () => {
+/*  describe('test de multiplicacion', () => {
   var _numberA = '2';
   var _numberB = '4';
   it('multiplica 2 numeros', () => {
@@ -105,4 +105,4 @@ describe('test de multiplicacion', () => {
 
     assert.strictEqual(result, 8);
   });
-});
+}); */
