@@ -1,78 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <title>Calculadora</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>GUM</title>
 </head>
 <body>
-    <!-- Always shows a header, even in smaller screens. -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <!-- Title -->
-        <span class="mdl-layout-title">Calculadora</span>
-        <!-- Add spacer, to align navigation to the right -->
-        <div class="mdl-layout-spacer"></div>
-      </div>
-    </header>
-    <main class="mdl-layout__content">
-      <div class="page-content">
-          <form>
-            <!-- Numeros -->
-            <div class="mdl-textfield mdl-js-textfield">
-                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="numA" name="numA">
-                <label class="mdl-textfield__label" for="numA">Numero...</label>
-                <span class="mdl-textfield__error">No es un numero!</span>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield">
-                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="numB" name="numB">
-                <label class="mdl-textfield__label" for="numB">Numero...</label>
-                <span class="mdl-textfield__error">No es un numero!</span>
-            </div>
-            <!-- Opciones -->
-            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-                <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked>
-                <span class="mdl-radio__label">+</span>
-            </label>
-            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2">
-                <span class="mdl-radio__label">-</span>
-            </label>
-            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-3">
-                <input type="radio" id="option-3" class="mdl-radio__button" name="options" value="3">
-                <span class="mdl-radio__label">*</span>
-            </label>
-            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-4">
-                <input type="radio" id="option-4" class="mdl-radio__button" name="options" value="4">
-                <span class="mdl-radio__label">/</span>
-            </label>
-            <!-- Enviar -->
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
-                Calcular
-            </button>
-          </form>
-          <div id="resultado"></div>
-      </div>
-    </main>
-</div>
-<script src="/socket.io/socket.io.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script>
-$(function () {
-  const socket = io();
-  $('form').submit(function (e) {
-    e.preventDefault(); // prevents page reloading
-    socket.emit('calculate', $('#numA').val(), $('#numB').val(), $("input[name='options']:checked").val());
-  });
-  socket.on('result', (result) => {
-      document.getElementById('resultado').innerHTML = (`El resultado es ${result}`);
-  });
-});
-</script>
+  
 </body>
 </html>
