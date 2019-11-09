@@ -20,9 +20,9 @@ module.exports = function (passport) {
 
   // used to deserialize the user
   passport.deserializeUser(function (id, done) {
-    connection.query('select * from encargado where RFC = ' + id, function (err, rows) {
+    connection.query('select * from encargado where RFC = "' + id + '"', function (err, rows) {
       if (!rows.length) {
-        connection.query('select * from subordinado where RFC = ' + id, function (err, rows) {
+        connection.query('select * from subordinado where RFC = "' + id + '"', function (err, rows) {
           return done(err, rows[0]);
         });
       }
@@ -53,6 +53,7 @@ module.exports = function (passport) {
             return done(null, false, req.flash('loginMessage', 'Esa direccion de correo electronico no esta registrada.')); // req.flash is the way to set flashdata using connect-flash
           }
           bcrypt.compare(password, rows[0].Contrasena, function (_err, res) {
+            console.log('subordinado');
             if (!(res)) { return done(null, false, req.flash('loginMessage', 'Oops! Contraseña incorrecta.')); } // create the loginMessage and save it to session as flashdata
             // all is well, return successful user
             return done(null, rows[0], req.flash('loginMessage', req.params.lib));
@@ -60,6 +61,7 @@ module.exports = function (passport) {
         });
       }
       bcrypt.compare(password, rows[0].Contrasena, function (_err, res) {
+        console.log('encargado', password, rows[0].Contrasena);
         if (!(res)) { return done(null, false, req.flash('loginMessage', 'Oops! Contraseña incorrecta.')); } // create the loginMessage and save it to session as flashdata
 
         // all is well, return successful user
