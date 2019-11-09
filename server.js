@@ -1,19 +1,36 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
-const bodyParser = require('body-parser');
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+// set up ======================================================================
+// get all the tools we need
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 3000;
+var passport = require('passport');
+var flash = require('connect-flash');
+var http = require('http').Server(app);
+var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+const path = require('path');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+require('./config/passport')(passport); // pass passport for configuration
 
-// Routes
-require('./app/routes.js')(app);
+// set up our express application
+app.use(morgan('dev')); // log every request to the console
+app.use(cookieParser()); // read cookies (needed for auth)
+app.use(bodyParser()); // get information from html forms
 
-io.on('connection', function (socket) {
-  //  Calculate service
-  require('./services/calculate.js')(io, socket);
-});
+app.set('view engine', 'ejs'); // set up ejs for templating
+app.use(express.static(path.join(__dirname, '/assets')));
+console.log(path.join(__dirname, '/assets'));
 
-http.listen(port, () => console.log('Ejecutando en el puerto 3000..'));
+// required for passport
+app.use(session({ secret: 'ksdjalkdjlSJLKajdlkKLADSKLAjdlknFKLlk!W3124124' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+// routes ======================================================================
+require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
+http.listen(port);
+console.log('The magic happens on port ' + port);
