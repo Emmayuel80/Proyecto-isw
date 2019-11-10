@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GUM</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.3.5/css/font-awesome.min.css">
+    <style>
+        body        { padding-top:80px; }
+    </style>
+</head>
+<body>
+<div class="container">
+      <header class="page-header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="/profile">Perfil</a></li>
+          <li><a href="/logout">Log out</a></li>
+        </ul>
+        <h3>ASUNTOS</h3>
+      </header>
+</div>
+<div class="container">
+    <% for(let i = 0; i < asuntos.length; i++) { %>
+         <% if(!asuntos || !asuntos.length){%>
+                <h2 aling="center">No Asutos Pendientes</h2>
+            <%} else {    
+            <article>
+                <h2 aling="center"><%= asuntos[i].Actividad %></h2>
+                <h3><%= asuntos[i].DiasTermino %></h3>
+                <p><%= asuntos[i].Descripcion %></p>
+            </article>
+            }%>
+    <% } %>
+</div>
+</body>
+</html>

@@ -63,3 +63,11 @@ function isLoggedIn (req, res, next) {
   // if they aren't redirect them to the home page
   res.redirect('/');
 }
+
+  // =====================================
+  // ASUNTOS ==============================
+  // =====================================
+  app.get('/profile/verAsuntos', function (req, res) {
+    // render the page and pass in any flash data if it exists
+    res.render('../public/views/verAsuntos.ejs', { asuntos: require('./getAsuntos')(req.user), user: req.user });
+  });
