@@ -22,16 +22,16 @@
       </header>
 </div>
 <div class="container">
+    <% if(!asuntos || !asuntos.length){%>
+        <h2 aling="center">No Asutos Pendientes</h2>
+    <%} else {  %>
     <% for(let i = 0; i < asuntos.length; i++) { %>
-         <% if(!asuntos || !asuntos.length){%>
-                <h2 aling="center">No Asutos Pendientes</h2>
-            <%} else {    
             <article>
                 <h2 aling="center"><%= asuntos[i].Actividad %></h2>
                 <h3><%= asuntos[i].DiasTermino %></h3>
                 <p><%= asuntos[i].Descripcion %></p>
             </article>
-            }%>
+            <%}%>
     <% } %>
 </div>
 </body>

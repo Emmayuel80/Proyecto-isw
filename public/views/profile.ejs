@@ -14,9 +14,9 @@
     <div class="page-header text-center">
         <h1><span class="fa fa-anchor"></span><%=`Bienvenido ${user.Nombre}`%></h1>
         <a href="/logout" class="btn btn-default btn-sm">Cerrar Sesión</a>
+        <a href="/profile/verAsuntos" class="btn btn-default btn-sm">Ver asuntos</a>
         <% if(!user.RFCE){%>
         <a href="/profile/crearAsunto" class="btn btn-default btn-sm">Crear asunto</a>
-        <a href="/profile/verAsuntos" class="btn btn-default btn-sm">Ver asuntos</a>
         <%}%>
     </div>
 
