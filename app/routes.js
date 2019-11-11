@@ -43,15 +43,31 @@ module.exports = function (app, passport) {
 
   app.get('/profile/crearAsunto', function (req, res) {
     // render the page and pass in any flash data if it exists
-    res.render('../public/views/crearAsunto.ejs', { sub: require('./getSubordinados')(req.user), user: req.user });
+    require('./getSubordinados')(req.user, (result) => {
+      res.render('../public/views/crearAsunto.ejs', { sub: result, user: req.user });
+    });
   });
 
+  app.post('/profile/crearAsunto', function (req, res) {
+    require('../services/createAsunto')(req, req.user.RFC);
+    res.redirect('/profile');
+  });
   // =====================================
   // LOGOUT ==============================
   // =====================================
   app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
+  });
+
+  // =====================================
+  // ASUNTOS ==============================
+  // =====================================
+  app.get('/profile/verAsuntos', function (req, res) {
+    require('./getAsuntos')(req.user, (result) => {
+      res.render('../public/views/verAsuntos.ejs', { asuntos: result, user: req.user });
+    });
+    // render the page and pass in any flash data if it exists
   });
 };
 
@@ -63,11 +79,3 @@ function isLoggedIn (req, res, next) {
   // if they aren't redirect them to the home page
   res.redirect('/');
 }
-
-  // =====================================
-  // ASUNTOS ==============================
-  // =====================================
-  app.get('/profile/verAsuntos', function (req, res) {
-    // render the page and pass in any flash data if it exists
-    res.render('../public/views/verAsuntos.ejs', { asuntos: require('./getAsuntos')(req.user), user: req.user });
-  });

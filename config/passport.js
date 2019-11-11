@@ -25,8 +25,9 @@ module.exports = function (passport) {
         connection.query('select * from subordinado where RFC = "' + id + '"', function (err, rows) {
           return done(err, rows[0]);
         });
+      } else if (rows.length) {
+        return done(err, rows[0]);
       }
-      return done(err, rows[0]);
     });
   });
 
@@ -59,14 +60,15 @@ module.exports = function (passport) {
             return done(null, rows[0], req.flash('loginMessage', req.params.lib));
           });
         });
-      }
-      bcrypt.compare(password, rows[0].Contrasena, function (_err, res) {
-        console.log('encargado', password, rows[0].Contrasena);
-        if (!(res)) { return done(null, false, req.flash('loginMessage', 'Oops! Contraseña incorrecta.')); } // create the loginMessage and save it to session as flashdata
+      } else if (rows.length) {
+        bcrypt.compare(password, rows[0].Contrasena, function (_err, res) {
+          console.log('encargado', password, rows[0].Contrasena);
+          if (!(res)) { return done(null, false, req.flash('loginMessage', 'Oops! Contraseña incorrecta.')); } // create the loginMessage and save it to session as flashdata
 
-        // all is well, return successful user
-        return done(null, rows[0], req.flash('loginMessage', req.params.lib));
-      });
+          // all is well, return successful user
+          return done(null, rows[0], req.flash('loginMessage', req.params.lib));
+        });
+      }
       // if the user is found but the password is wrong
     });
   }));
