@@ -4,9 +4,8 @@ const pool = db.getPool();
 module.exports = function (req) {
   pool.getConnection(function (_err, connection) {
     connection.query('select idAsunto from asunto order by idAsunto DESC', function (_err, rows) {
-      const lastId = Number(rows[0].idAsunto);
       const newAsunto = {
-        IdAsunto: (lastId + 1),
+        IdAsunto: (Number(rows[0].idAsunto) + 1),
         Actividad: req.body.Actividad,
         Descripcion: req.body.Descripcion,
         FechaCreacion: new Date(),
@@ -14,9 +13,7 @@ module.exports = function (req) {
         RFCS: req.body.RFCS,
         Estado: 'En progreso.'
       };
-      const insertQuery = 'INSERT INTO asunto SET ?';
-      console.log(newAsunto);
-      connection.query(insertQuery, newAsunto, function (_err, _rows) {
+      connection.query('INSERT INTO asunto SET ?', newAsunto, function (_err, _rows) {
       });
     });
   });
