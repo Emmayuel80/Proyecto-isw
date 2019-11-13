@@ -16,7 +16,7 @@ module.exports = function (req) {
       connection.query('INSERT INTO asunto SET ?', newAsunto, function (_err, _rows) {
       });
       const asignAsunto = {
-        IdAsunto: lastId,
+        IdAsunto: (lastId + 1),
         RFCS: req.body.RFCS
       };
       connection.query('INSERT INTO asuntosubordinado SET ?', asignAsunto, function (_err, _rows) {
