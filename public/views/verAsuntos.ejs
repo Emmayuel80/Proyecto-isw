@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>GUM</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.3.5/css/font-awesome.min.css">
-    <style>
-        body        { padding-top:80px; }
-    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container">
@@ -18,7 +18,7 @@
           <li class="active"><a href="/profile">Perfil</a></li>
           <li><a href="/logout">Log out</a></li>
         </ul>
-        <h3>ASUNTOS</h3>
+        <h1><%=`Bienvenido ${user.Nombre}`%></h1>
       </header>
 </div>
 <div class="container">
@@ -26,10 +26,14 @@
         <h2 aling="center">No Asutos Pendientes</h2>
     <%} else {  %>
     <% for(let i = 0; i < asuntos.length; i++) { %>
-            <article>
-                <h2 aling="center"><%= asuntos[i].Actividad %></h2>
-                <h3><%= asuntos[i].DiasTermino %></h3>
-                <p><%= asuntos[i].Descripcion %></p>
+            <article style="border:3px solid black; border-color: blue;border-radius: 15px">
+                <h2 aling="center" data-toggle="collapse" href="#<%asuntos[i].IdAsunto%>" role="button" aria-expanded="false" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
+                <div id="<%asuntos[i].IdAsunto%>" class="collapse" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px"><%= asuntos[i].Descripcion %></div>
+                <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
+                    <button class="btn btn-primary" type="submit">Agregar</button>
+                    <button class="btn btn-primary" type="submit">Rechazar</button>
+                    <button class="btn btn-primary" type="submit">Finalizar</button>
+                </div>
             </article>
             <%}%>
     <% } %>
