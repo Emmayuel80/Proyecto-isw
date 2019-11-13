@@ -1,8 +1,9 @@
 //  Declaraciones de modulos de cambio de estado
-
-module.exports = function (usr, op) {
+const rechazarAsunto = require('./rechazarAsunto');
+module.exports = function (asunto, op) {
   if (op === 1) {
     //  Cambiar a rechazado
+    rechazarAsunto(asunto);
     return 'Rechazado';
   }
   if (op === 2) {
