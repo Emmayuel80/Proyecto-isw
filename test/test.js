@@ -41,7 +41,9 @@ describe('Test de obtencion de subordinados', () => {
     }, (result) => {
       connection.query("select * from subordinado where RFCE = 'FDSK45385'", (_err, _rows) => {
         assert.deepStrictEqual(result, _rows);
+        try { connection.end(); } catch (e) {}
       });
+      try { connection.end(); } catch (e) {}
     });
   });
 });
