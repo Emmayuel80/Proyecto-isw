@@ -1,10 +1,7 @@
-const db = require('../config/database');
-const pool = db.getPool();
+const connection = require('../config/database');
 
 module.exports = function (req, callback) {
-  pool.getConnection(function (_err, connection) {
-    connection.query('select Actividad, Descripcion, IdAsunto from asunto where RFCS= "' + req.RFC + '"', function (_err, _rows) {
-      callback(_rows);
-    });
+  connection.query('select Actividad, Descripcion, IdAsunto from asunto where RFCS= "' + req.RFC + '"', function (_err, _rows) {
+    callback(_rows);
   });
 };

@@ -2,8 +2,7 @@
 //  Test para probar mocha framework
 const assert = require('assert');
 const createAsunto = require('../services/createAsunto');
-const db = require('../config/database');
-const pool = db.getPool();
+const connection = require('../config/database');
 const getAsuntos = require('../app/getAsuntos');
 const getSubordinados = require('../app/getSubordinados');
 
@@ -17,10 +16,8 @@ describe('Tests de creacion de asunto', () => {
         RFCS: 'null'
       }
     });
-    pool.getConnection(function (_err, connection) {
-      connection.query('select Actividad from asunto where Actividad = "Test"', function (_err, _rows) {
-        assert.strictEqual(_rows[0], 'Test');
-      });
+    connection.query('select Actividad from asunto where Actividad = "Test"', function (_err, _rows) {
+      assert.strictEqual(_rows[0], 'Test');
     });
   });
 });
@@ -30,10 +27,8 @@ describe('Test de obtencion de asuntos', () => {
     getAsuntos({
       RFC: 'SUBOR1'
     }, (result) => {
-      pool.getConnection((_err, connection) => {
-        connection.query('select Actividad from asunto where RFCS= "SUBOR1"', (_err, _rows) => {
-          assert.deepStrictEqual(result, _rows);
-        });
+      connection.query('select Actividad from asunto where RFCS= "SUBOR1"', (_err, _rows) => {
+        assert.deepStrictEqual(result, _rows);
       });
     });
   });
@@ -44,10 +39,8 @@ describe('Test de obtencion de subordinados', () => {
     getSubordinados({
       RFC: 'FDSK45385'
     }, (result) => {
-      pool.getConnection((_err, connection) => {
-        connection.query("select * from subordinado where RFCE = 'FDSK45385'", (_err, _rows) => {
-          assert.deepStrictEqual(result, _rows);
-        });
+      connection.query("select * from subordinado where RFCE = 'FDSK45385'", (_err, _rows) => {
+        assert.deepStrictEqual(result, _rows);
       });
     });
   });
