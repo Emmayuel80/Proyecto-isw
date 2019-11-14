@@ -17,7 +17,7 @@ describe('Tests de creacion de asunto', () => {
       }
     });
     connection.query('select Actividad from asunto where Actividad = "Test"', function (_err, _rows) {
-      assert.strictEqual(_rows[0], 'Test');
+      assert.strictEqual(_rows[0].Actividad, 'Test');
     });
   });
 });
