@@ -47,8 +47,14 @@
     <%} else {  %>
     <% for(let i = 0; i < asuntos.length; i++) { %>
             <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
-                <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
-                <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;"><%= asuntos[i].Descripcion %></div>
+                <div>
+                    <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px; display: inline;"><%= asuntos[i].Actividad %></h2>
+                    <h4 aling="left" style="margin-left: 10px; color:blue; display: inline;"><%= asuntos[i].Estado %></h4>
+                </div>
+                <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
+                    <h4>Dias para termino: <%= asuntos[i].DiasTermino %></h4>
+                    <%= asuntos[i].Descripcion %>
+                </div>
                 <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
                     <button class="btn btn-primary" type="submit" onclick="agregar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Agregar</button>
                     <button class="btn btn-primary" type="submit" onclick="rechazar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Rechazar</button>
