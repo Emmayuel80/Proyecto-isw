@@ -15,21 +15,6 @@
             }
             }
     </script>
-    <script>
-        function rechazar(asuntoid, rfc){
-
-        }
-    </script>
-    <script>
-        function agregar(asuntoid, rfc){
-    
-        }
-    </script>
-    <script>
-        function finalizar(asuntoid, rfc){
-    
-        }
-    </script>
 </head>
 <body>
 <div class="container">
@@ -46,7 +31,7 @@
         <h2 aling="center">No Tienes Asutos Pendientes</h2>
     <%} else {  %>
     <% for(let i = 0; i < asuntos.length; i++) { %>
-            <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
+            <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;" id="<%=asuntos[i].IdAsunto + 'Art'%>">
                 <div>
                     <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px; display: inline;"><%= asuntos[i].Actividad %></h2>
                     <h4 aling="left" style="margin-left: 10px; color:blue; display: inline;"><%= asuntos[i].Estado %></h4>
@@ -56,7 +41,7 @@
                     <%= asuntos[i].Descripcion %>
                 </div>
                 <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
-                    <button class="btn btn-primary" type="submit" onclick="agregar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Agregar</button>
+                    <a href="/profile/verAsuntos/crearActividad/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Agregar</a>
                     <button class="btn btn-primary" type="submit" onclick="rechazar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Rechazar</button>
                     <button class="btn btn-primary" type="submit" onclick="finalizar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Finalizar</button>
                 </div>
@@ -64,5 +49,30 @@
             <%}%>
     <% } %>
 </div>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+    var socket = io();
+    function rechazar(asuntoid, rfc){
+        socket.emit('rechazar', asuntoid, rfc);
+    }
+
+    function agregar(asuntoid, rfc){
+
+    }
+
+    function finalizar(asuntoid, rfc){
+        socket.emit('concluir', asuntoid);
+    }
+    socket.on('rechazado', (asuntoId) => {
+        var parent = document.getElementById(asuntoId + 'Art');
+        parent.parentNode.removeChild(parent);
+    });
+    socket.on('concluido', (asuntoId) => {
+        var parent = document.getElementById(asuntoId + 'Art');
+        parent.parentNode.removeChild(parent);
+    });
+
+</script>
 </body>
 </html>
