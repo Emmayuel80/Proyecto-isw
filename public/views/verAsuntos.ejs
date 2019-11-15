@@ -16,17 +16,17 @@
             }
     </script>
     <script>
-        function rechazar(asuntoid){
+        function rechazar(asuntoid, rfc){
 
         }
     </script>
     <script>
-        function agregar(asuntoid){
+        function agregar(asuntoid, rfc){
     
         }
     </script>
     <script>
-        function finalizar(asuntoid){
+        function finalizar(asuntoid, rfc){
     
         }
     </script>
@@ -50,9 +50,9 @@
                 <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
                 <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;"><%= asuntos[i].Descripcion %></div>
                 <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
-                    <button class="btn btn-primary" type="submit" onclick="agregar('<%=asuntos[i].IdAsunto%>')">Agregar</button>
-                    <button class="btn btn-primary" type="submit" onclick="rechazar('<%=asuntos[i].IdAsunto%>')">Rechazar</button>
-                    <button class="btn btn-primary" type="submit" onclick="finalizar('<%=asuntos[i].IdAsunto%>')">Finalizar</button>
+                    <button class="btn btn-primary" type="submit" onclick="agregar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Agregar</button>
+                    <button class="btn btn-primary" type="submit" onclick="rechazar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Rechazar</button>
+                    <button class="btn btn-primary" type="submit" onclick="finalizar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Finalizar</button>
                 </div>
             </article>
             <%}%>
