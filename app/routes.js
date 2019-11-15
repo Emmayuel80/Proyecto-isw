@@ -70,9 +70,9 @@ module.exports = function (app, passport) {
     // render the page and pass in any flash data if it exists
   });
 
-  app.get('/profile/verAsuntosConcluidos', isLoggedIn, function (req, res) {
-    require('./getAsuntosConcluidos')(req.user, (result) => {
-      res.render('../public/views/verAsuntosConcluidos.ejs', { asuntos: result, user: req.user });
+  app.get('/profile/verAsuntosEncargado', isLoggedIn, function (req, res) {
+    require('./getAllAsuntos')(req.user, (result) => {
+      res.render('../public/views/verAsuntosEncargado.ejs', { asuntos: result, user: req.user });
     });
     // render the page and pass in any flash data if it exists
   });
