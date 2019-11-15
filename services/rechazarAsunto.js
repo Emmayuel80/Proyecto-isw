@@ -1,6 +1,12 @@
 const connection = require('../config/database');
 
-module.exports = function (dataSubject) {
-  connection.query('Update asunto Set Estado="Rechazado" where idAsunto="' + dataSubject.idAsunto + '"', (_err) => {});
-  connection.query('insert into error(idAsunto, descripcion) values ("' + dataSubject.idAsunto + '"descripcion', (_error) => {});
+module.exports = function (asunto) {
+  connection.query('Update asunto Set Estado="Rechazado." where idAsunto="' + asunto.asuntoid + '"', (_err) => {});
+  connection.query('Update asunto Set DiasTermino= -1 where idAsunto="' + asunto.asuntoid + '"', (_err) => {});
+  var newReason = {
+    idAsunto: asunto.asuntoid,
+    RFCS: asunto.rfc,
+    Descripcion: asunto.reason
+  };
+  connection.query('insert into asuntorechazado set ?', newReason, (_error) => {});
 };

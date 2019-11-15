@@ -47,6 +47,10 @@
                         <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
                                 <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
                                 <br>
+                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_rechazo('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'rec'%>" style="margin-left: 10px">Mostrar por qué fue rechazado.</div>
+                                <br>
+                                <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
+                                <h4>Dias de termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %></h4>
                                 Descripción: <%= asuntos[i].Descripcion %>
                             </div>
                             <br>
@@ -68,6 +72,8 @@
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
                                <br>
+                               <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
+                               <h4>Dias de termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %></h4>
                                Descripción: <%= asuntos[i].Descripcion %>
                            </div>
                            <br>
@@ -89,6 +95,8 @@
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
                                 <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
                                 <br>
+                                <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
+                                <h4>Dias de termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %></h4>
                                 Descripción: <%= asuntos[i].Descripcion %>
                             </div>
                             <br>
@@ -110,6 +118,10 @@
     document.getElementById(idAsunto + 'Sub').innerHTML = "<i>Obteniendo subordinados...</i>";
     socket.emit('obtener subordinados', idAsunto);
     }
+    function muestra_rechazo(idAsunto){
+    document.getElementById(idAsunto + 'rec').innerHTML = "<i>Obteniendo informacion de rechazo...</i>";
+    socket.emit('obtener rechazo', idAsunto);
+    }
     socket.on('subordinados asignados', (result, idAsunto) => {
         document.getElementById(idAsunto + 'Sub').innerHTML = "Subordinados asignados al asunto: <br>";
         for (let subor = 0; subor < result.length; subor++) {
@@ -119,7 +131,11 @@
         document.getElementById(idAsunto + 'Sub').onclick = "";
         document.getElementById(idAsunto + 'Sub').role = "";
     });
-
+    socket.on('info rechazo', (result, idAsunto) => {
+        document.getElementById(idAsunto + 'rec').innerHTML = `<b>Subordinado que rechazó el asunto:</b> <br> <i>${result[0].nombre}</i> <br> <b>Razón del rechazo:</b> <br> <i>${result[0].descripcion}</i> <br>`;
+        document.getElementById(idAsunto + 'rec').onclick = "";
+        document.getElementById(idAsunto + 'rec').role = "";
+    });
 </script>
 </body>
 </html>

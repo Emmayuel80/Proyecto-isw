@@ -37,7 +37,8 @@
                     <h4 aling="left" style="margin-left: 10px; color:blue; display: inline;"><%= asuntos[i].Estado %></h4>
                 </div>
                 <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; margin-top: 5px; display: none;">
-                    <h4>Dias de termino:<%=asuntos[i].DiasTermino%></h4>
+                    <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
+                    <h4>Dias de termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %></h4>
                     <%= asuntos[i].Descripcion %>
                 </div>
                 <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
@@ -49,12 +50,48 @@
             <%}%>
     <% } %>
 </div>
+<!-- Simple pop-up dialog box containing a form -->
+<dialog id="favDialog">
+    <form method="dialog">
+            <div class="form-group">
+                <label for="Descripcion">Especifica por qué rechazas el asunto:</label>
+                <textarea class="form-control" name="reason" id="re" maxlength="250" title="Maximo 250 caracteres"></textarea>
+            </div>
+      <menu>
+        <button value="cancel" class="btn btn-warning">Cancel</button>
+        <button id="confirmBtn" class="btn btn-primary" value="default" onclick="submitRechazar()">Confirm</button>
+      </menu>
+    </form>
+  </dialog>
+
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
     var socket = io();
     function rechazar(asuntoid, rfc){
-        socket.emit('rechazar', asuntoid, rfc);
+        if (typeof document.getElementById('favDialog').showModal === "function") {
+                 document.getElementById('favDialog').showModal();
+        } else {
+             alert("The dialog API is not supported by this browser");
+        }
+        var attribId = document.createAttribute('asId');
+        var attribRFC = document.createAttribute('noRFC');
+        attribId.value = asuntoid;
+        attribRFC.value = rfc;
+        document.getElementById('re').setAttributeNode(attribId);
+        document.getElementById('re').setAttributeNode(attribRFC);
+    }
+    function submitRechazar(){
+        var reason = document.getElementById('re').value;
+        if(reason.trim() === ''){
+            alert('Tienes que especificar por qué rechazas el asunto');
+        } else {
+        var asuntoid = document.getElementById('re').getAttribute('asId')
+        var rfc = document.getElementById('re').getAttribute('noRFC');
+        socket.emit('rechazar', {asuntoid: asuntoid, reason: reason, rfc: rfc});
+        document.getElementById('favDialog').returnValue
+        }
+        
     }
 
     function agregar(asuntoid, rfc){
@@ -72,6 +109,8 @@
         var parent = document.getElementById(asuntoId + 'Art');
         parent.parentNode.removeChild(parent);
     });
+
+
 
 </script>
 </body>
