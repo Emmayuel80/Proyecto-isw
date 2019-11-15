@@ -45,9 +45,11 @@
                     <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
                         <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
                         <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
-                            <h2 role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</h2>
-                            <%= asuntos[i].Descripcion %>
-                        </div>
+                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
+                                <br>
+                                Descripción: <%= asuntos[i].Descripcion %>
+                            </div>
+                            <br>
                     </article>
                     <%}
                 }
@@ -85,9 +87,11 @@
                        <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
                            <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
-                               <h2 role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</h2>
-                               <%= asuntos[i].Descripcion %>
-                           </div>
+                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
+                                <br>
+                                Descripción: <%= asuntos[i].Descripcion %>
+                            </div>
+                            <br>
                        </article>
                        <%}
                    }
