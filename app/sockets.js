@@ -4,5 +4,10 @@ module.exports = function (io) {
       require('../services/changeEstado')(asunto, 1);
       io.emit('rechazado', asunto);
     });
+    socket.on('obtener subordinados', (idAsunto) => {
+      require('./getSubordinadosAsignados')(idAsunto, (result) => {
+        io.emit('subordinados asignados', result, idAsunto);
+      });
+    });
   });
 };

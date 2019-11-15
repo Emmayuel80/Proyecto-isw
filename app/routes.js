@@ -41,14 +41,14 @@ module.exports = function (app, passport) {
     });
   });
 
-  app.get('/profile/crearAsunto', function (req, res) {
+  app.get('/profile/crearAsunto', isLoggedIn, function (req, res) {
     // render the page and pass in any flash data if it exists
     require('./getSubordinados')(req.user, (result) => {
       res.render('../public/views/crearAsunto.ejs', { sub: result, user: req.user });
     });
   });
 
-  app.post('/profile/crearAsunto', function (req, res) {
+  app.post('/profile/crearAsunto', isLoggedIn, function (req, res) {
     require('../services/createAsunto')(req, req.user.RFC);
     res.redirect('/profile');
   });
@@ -63,9 +63,16 @@ module.exports = function (app, passport) {
   // =====================================
   // ASUNTOS ==============================
   // =====================================
-  app.get('/profile/verAsuntos', function (req, res) {
+  app.get('/profile/verAsuntos', isLoggedIn, function (req, res) {
     require('./getAsuntos')(req.user, (result) => {
       res.render('../public/views/verAsuntos.ejs', { asuntos: result, user: req.user });
+    });
+    // render the page and pass in any flash data if it exists
+  });
+
+  app.get('/profile/verAsuntosConcluidos', isLoggedIn, function (req, res) {
+    require('./getAsuntosConcluidos')(req.user, (result) => {
+      res.render('../public/views/verAsuntosConcluidos.ejs', { asuntos: result, user: req.user });
     });
     // render the page and pass in any flash data if it exists
   });
