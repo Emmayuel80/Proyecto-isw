@@ -76,6 +76,16 @@ module.exports = function (app, passport) {
     });
     // render the page and pass in any flash data if it exists
   });
+
+  app.get('/profile/verAsuntos/crearActividad/:idAsunto', isLoggedIn, function (req, res) {
+    res.render('../public/views/crearActividad.ejs', { idAsunto: req.params.idAsunto, user: req.user });
+    // render the page and pass in any flash data if it exists
+  });
+  app.post('/profile/verAsuntos/crearActividad/:idAsunto', isLoggedIn, function (req, res) {
+    require('../services/createActividad')(req, req.params.idAsunto, req.user.RFC);
+    res.redirect('/profile');
+    // render the page and pass in any flash data if it exists
+  });
 };
 
 // route middleware to make sure a user is logged in
