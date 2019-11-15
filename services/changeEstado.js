@@ -1,5 +1,7 @@
 //  Declaraciones de modulos de cambio de estado
 const rechazarAsunto = require('./rechazarAsunto');
+const concluirAsunto = require('./concluirAsunto');
+
 module.exports = function (asunto, op) {
   if (op === 1) {
     //  Cambiar a rechazado
@@ -20,6 +22,7 @@ module.exports = function (asunto, op) {
   }
   if (op === 5) {
     // Cambiar a concluido
+    concluirAsunto(asunto);
     return 'Concluido';
   }
 };
