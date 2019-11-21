@@ -42,7 +42,8 @@
                     <%= asuntos[i].Descripcion %>
                 </div>
                 <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
-                    <a href="/profile/verAsuntos/crearActividad/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Agregar</a>
+                    <a href="/profile/verAsuntos/crearActividad/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Agregar Actividad</a>
+                    <a href="/profile/verActividades/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Ver Actividades</a>
                     <button class="btn btn-primary" type="submit" onclick="rechazar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Rechazar</button>
                     <button class="btn btn-primary" type="submit" onclick="finalizar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Finalizar</button>
                 </div>
