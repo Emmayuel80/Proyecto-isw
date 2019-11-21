@@ -35,7 +35,7 @@
                 <div>
                     <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px; display: inline;"><%= asuntos[i].Actividad %></h2>
                     <h4 aling="left" style="margin-left: 10px; color:blue; display: inline;"><%= asuntos[i].Estado %></h4>
-                    <h4 onload="fecha_bonita('<%=asuntos[i].FechaCreacion%>', 'this')" aling="left" style="margin-left: 10px; color:rgb(212, 0, 255); display: inline;"><%=asuntos[i].FechaCreacion%></h4>
+                    <h4 aling="left" style="margin-left: 10px; color:rgb(212, 0, 255); display: inline;"><%=asuntos[i].FechaCreacion%></h4>
                 </div>
                 <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; margin-top: 5px; display: none;">
                     <h4>Dias de termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %></h4>
