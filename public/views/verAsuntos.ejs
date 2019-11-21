@@ -42,10 +42,17 @@
                     <%= asuntos[i].Descripcion %>
                 </div>
                 <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
+<<<<<<< HEAD
                     <a href="/profile/verAsuntos/crearActividad/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Agregar</a>
                     <button class="btn btn-primary" type="submit">Documento</button>
                     <button class="btn btn-danger" type="submit" onclick="rechazar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Rechazar</button>
                     <button class="btn btn-success" type="submit" onclick="finalizar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Finalizar</button>
+=======
+                    <a href="/profile/verAsuntos/crearActividad/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Agregar Actividad</a>
+                    <a href="/profile/verActividades/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Ver Actividades</a>
+                    <button class="btn btn-primary" type="submit" onclick="rechazar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Rechazar</button>
+                    <button class="btn btn-primary" type="submit" onclick="finalizar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Finalizar</button>
+>>>>>>> 4f6d1eca1b390ca51f85e94b4cb1498633fe1d8e
                 </div>
             </article>
             <%}%>

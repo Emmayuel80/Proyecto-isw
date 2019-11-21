@@ -76,7 +76,9 @@ module.exports = function (app, passport) {
     });
     // render the page and pass in any flash data if it exists
   });
-
+  // =====================================
+  // ACTIVIDADES ==============================
+  // =====================================
   app.get('/profile/verAsuntos/crearActividad/:idAsunto', isLoggedIn, function (req, res) {
     res.render('../public/views/crearActividad.ejs', { idAsunto: req.params.idAsunto, user: req.user });
     // render the page and pass in any flash data if it exists
@@ -84,6 +86,19 @@ module.exports = function (app, passport) {
   app.post('/profile/verAsuntos/crearActividad/:idAsunto', isLoggedIn, function (req, res) {
     require('../services/createActividad')(req, req.params.idAsunto, req.user.RFC);
     res.redirect('/profile');
+    // render the page and pass in any flash data if it exists
+  });
+  app.get('/profile/verActividades/:idAsunto', isLoggedIn, function (req, res) {
+    require('./getAllActividades')(req.params.idAsunto, (result) => {
+      res.render('../public/views/verActividades.ejs', { actividad: result, user: req.user });
+    });
+  });
+  app.get('/profile/subirDocumento/Actividad/:idActividad', isLoggedIn, function (req, res) {
+    res.render('../public/views/subirDocumento.ejs', { idActividad: req.params.idActividad, user: req.user });
+    // render the page and pass in any flash data if it exists
+  });
+  app.get('/profile/subirDocumento/Actividad/:idActividad', isLoggedIn, function (req, res) {
+    res.redirect('/profile/verAsuntos');
     // render the page and pass in any flash data if it exists
   });
 };
