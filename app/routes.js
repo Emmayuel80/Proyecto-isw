@@ -101,8 +101,18 @@ module.exports = function (app, passport) {
     res.redirect('/profile/verAsuntos');
     // render the page and pass in any flash data if it exists
   });
+  // =====================================
+  // Documentos Asuntos ==============================
+  // =====================================
+  app.get('/profile/subirDocumento/Asunto/:idAsunto', isLoggedIn, function (req, res) {
+    res.render('../public/views/subirDocumento.ejs', { idAsunto: req.params.idAsunto, user: req.user });
+    // render the page and pass in any flash data if it exists
+  });
+  app.get('/profile/subirDocumento/Asunto/:idAsunto', isLoggedIn, function (req, res) {
+    res.redirect('/profile/verAsuntos');
+    // render the page and pass in any flash data if it exists
+  });
 };
-
 // route middleware to make sure a user is logged in
 function isLoggedIn (req, res, next) {
   // if user is authenticated in the session, carry on
