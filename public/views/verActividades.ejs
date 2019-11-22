@@ -30,7 +30,9 @@
 <% if(!actividad || !actividad.length){%>
         <h2 aling="center">Este asunto aun no tiene actividades.</h2>
     <%} else { %>
+    <% if(!user.RFCE){
     <a href="/profile/verAsuntos/crearActividad/<%=actividad[0].IdAsunto%>" class="btn btn-primary">Agregar Actividad</a>
+    <%}%>
     <% for(let i = 0; i < actividad.length; i++) { %>
             <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;" id="<%=actividad[i].IdActividad + 'Art'%>">
                 <div>

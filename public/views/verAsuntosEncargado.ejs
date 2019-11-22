@@ -33,6 +33,7 @@
           <li class="active"><a data-toggle="tab" href="#rechazados">Rechazados</a></li>
           <li><a data-toggle="tab" href="#progreso">En Progreso</a></li>
           <li><a data-toggle="tab" href="#concluido">Concluidos</a></li>
+          <li><a data-toggle="tab" href="#concluido">Suspendidos</a></li>
         </ul>
       
         <div class="tab-content">
@@ -75,8 +76,8 @@
                            </div>
                            <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
                                 <a href="/asunto/updateSubordinados/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Editar Subordinados Asignados</a>
-                                <button class="btn btn-primary" type="submit" onclick="rechazar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Cancelar</button>
-                                <button class="btn btn-primary" type="submit" onclick="finalizar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Suspender</button>
+                                <a href="/asunto/suspender/<%=asuntos[i].IdAsunto%>" class="btn btn-primary warning">Suspender</a>
+                                <a href="/asunto/cancelar/<%=asuntos[i].IdAsunto%>" class="btn btn-primary danger">Cancelar</a>
                             </div>
                            <br>
                        </article>
@@ -98,15 +99,42 @@
                                 <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
                                 <br>
                                 <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
-                                <h4>Dias de termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %></h4>
                                 Descripción: <%= asuntos[i].Descripcion %>
                             </div>
                             <br>
+                            <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
+                                    <a href="/profile/verActividades/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Ver Actividades realizadas.</a>
+                            </div>
                        </article>
                        <%}
                    }
                    if(concluido === 0){%>
                    <h2>No hay asuntos concluidos.</h2>
+               <% }%>
+          </div>
+          <div id="suspendidos" class="tab-pane fade">
+                <%  var suspendido = 0;
+                for(let i = 0; i < asuntos.length; i++) { 
+                    if(asuntos[i].Estado === 'Suspendido.'){
+                        suspendido++;
+                    %>
+                       <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
+                           <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
+                           <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
+                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
+                                <br>
+                                <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
+                                Descripción: <%= asuntos[i].Descripcion %>
+                            </div>
+                            <br>
+                            <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
+                                <a href="/asunto/reanudar/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Reanudar asunto.</a>
+                            </div>
+                       </article>
+                       <%}
+                   }
+                   if(suspendido === 0){%>
+                   <h2>No hay asuntos suspendidos.</h2>
                <% }%>
           </div>
         </div>
