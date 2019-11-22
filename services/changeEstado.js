@@ -2,6 +2,7 @@
 const rechazarAsunto = require('./rechazarAsunto');
 const concluirAsunto = require('./concluirAsunto');
 const cancelarAsunto = require('./cancelarAsunto.js');
+const suspenderAsunto = require('./suspenderAsunto');
 
 module.exports = function (asunto, op) {
   if (op === 1) {
@@ -16,6 +17,7 @@ module.exports = function (asunto, op) {
   }
   if (op === 3) {
     //  Cambiar a suspender
+    suspenderAsunto(asunto);
     return 'Suspendido';
   }
   if (op === 4) {
