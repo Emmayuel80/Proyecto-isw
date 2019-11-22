@@ -135,6 +135,17 @@ module.exports = function (app, passport) {
     const file = `./${req.params.folder}/${req.params.actividad}/${req.params.id}/${req.params.file}`;
     res.download(file); // Set disposition and send it.
   });
+  // =====================================
+  // DOCUMENTO DE ASUNTO ==============================
+  // =====================================
+  app.get('/profile/subirDocumentoA/Asunto/:idAsunto', isLoggedIn, function (req, res) {
+    res.render('../public/views/subirDocumentoA.ejs', { idAsunto: req.params.idAsunto, user: req.user });
+    // render the page and pass in any flash data if it exists
+  });
+  app.post('/profile/subirDocumentoA/Asunto/:idAsunto', isLoggedIn, function (req, res) {
+    res.redirect('/profile/verActividades/' + req.params.idAsunto);
+    // render the page and pass in any flash data if it exists
+  });
 };
 // route middleware to make sure a user is logged in
 function isLoggedIn (req, res, next) {
