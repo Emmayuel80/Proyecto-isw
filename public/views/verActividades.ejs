@@ -27,9 +27,9 @@
       </header>
 </div>
 <div class="container">
-    <% if(!actividad || !actividad.length){%>
+<% if(!actividad || !actividad.length){%>
         <h2 aling="center">Este asunto aun no tiene actividades.</h2>
-    <%} else {  %>
+    <%} else { %>
     <a href="/profile/verAsuntos/crearActividad/<%=actividad[0].IdAsunto%>" class="btn btn-primary">Agregar Actividad</a>
     <% for(let i = 0; i < actividad.length; i++) { %>
             <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;" id="<%=actividad[i].IdActividad + 'Art'%>">
@@ -37,6 +37,15 @@
                     <h2 role="button" onClick="muestra_oculta('<%=actividad[i].IdActividad%>')" style="margin-left: 10px; display: inline;"><%= actividad[i].Nombre %></h2>
                 </div>
                 <div id="<%=actividad[i].IdActividad%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; margin-top: 5px; display: none;">
+                    <% for (let g = 0; g < collab.length; g++) {
+                        if(collab[g].length !== 0){
+                        const element = collab[g][0];
+                        if(element.IdActividad === actividad[i].IdActividad){ %>
+                        <div style=" margin-left: 10px"><%=`En colaboracion con el area: ${element.nombre}`%></div>
+                    <%}
+                        }
+                 } %>
+                 <br>
                     <%= actividad[i].Descripcion %>
                 </div>
                 <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">

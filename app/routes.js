@@ -107,7 +107,9 @@ module.exports = function (app, passport) {
   // ACTIVIDADES ==============================
   // =====================================
   app.get('/profile/verAsuntos/crearActividad/:idAsunto', isLoggedIn, function (req, res) {
-    res.render('../public/views/crearActividad.ejs', { idAsunto: req.params.idAsunto, user: req.user });
+    require('./getAreas')((result) => {
+      res.render('../public/views/crearActividad.ejs', { idAsunto: req.params.idAsunto, user: req.user, area: result });
+    });
     // render the page and pass in any flash data if it exists
   });
   app.post('/profile/verAsuntos/crearActividad/:idAsunto', isLoggedIn, function (req, res) {
@@ -117,7 +119,9 @@ module.exports = function (app, passport) {
   });
   app.get('/profile/verActividades/:idAsunto', isLoggedIn, function (req, res) {
     require('./getAllActividades')(req.params.idAsunto, (result) => {
-      res.render('../public/views/verActividades.ejs', { actividad: result, user: req.user });
+      require('./getColaboracionAreas')(result, (collab) => {
+        res.render('../public/views/verActividades.ejs', { actividad: result, user: req.user, collab: collab });
+      });
     });
   });
   app.get('/profile/subirDocumento/Actividad/:idAsunto/:idActividad', isLoggedIn, function (req, res) {
