@@ -1,22 +1,27 @@
 /* eslint-disable no-undef */
 //  Test para probar mocha framework
 const assert = require('assert');
-//  const createAsunto = require('../services/createAsunto');
+const createAsunto = require('../services/createAsunto');
 const connection = require('../config/database');
 const getAsuntos = require('../app/getAsuntos');
 const getAllAsuntos = require('../app/getAllAsuntos');
 const getSubordinados = require('../app/getSubordinados');
 const getSubordinadosAsignados = require('../app/getSubordinadosAsignados');
-//  const createActividad = require('../services/createActividad');
+const createActividad = require('../services/createActividad');
 const concluirAsunto = require('../services/concluirAsunto');
-/*  describe('Tests de creacion de asunto', () => {
+describe('Tests de creacion de asunto', () => {
   it('Debe crear un asunto con el titulo Test y descripcion Test unitario con 0 dias de termino', () => {
     createAsunto({
       body: {
         Actividad: 'Test',
         Descripcion: 'Test unitario',
         DiasTermino: 0,
-        RFCS: 'null'
+        RFCS: 'null',
+        asignar: undefined
+
+      },
+      user: {
+        RFC: 'TEST'
       }
     });
     connection.query('select Actividad from asunto where Actividad = "Test" and Descripcion = "Test unitario"', function (_err, _rows) {
@@ -30,14 +35,15 @@ describe('Tests de creacion de actividad', () => {
     createActividad({
       body: {
         Nombre: 'Test',
-        DescripcionActividad: 'Test unitario'
+        DescripcionActividad: 'Test unitario',
+        asignar: undefined
       }
     }, 0, 'SUBOR1');
     connection.query('select Nombre from actividad where Nombre = "Test" and Descripcion ="Test unitario"', function (_err, _rows) {
       assert.strictEqual(_rows[0].Nombre, 'Test');
     });
   });
-}); */
+});
 
 describe('Tests de conclusion de asunto', () => {
   it('Debe concluir el asunto con el id  0', () => {
@@ -53,7 +59,7 @@ describe('Test de obtencion de asuntos', () => {
     getAsuntos({
       RFC: 'SUBOR1'
     }, (result) => {
-      connection.query('select a.Actividad, a.Descripcion, a.IdAsunto, a.Estado, a.DiasTermino, s.RFC from asunto a, asuntosubordinado x, subordinado s where a.Estado="En progreso." and a.IdAsunto= x.IdAsunto and x.RFCS= s.RFC and s.RFC= "SUBOR1"', (_err, _rows) => {
+      connection.query('select a.* from asunto a, subordinado s where a.IdAsunto in ( SELECT h.IdAsunto from asuntosubordinado h WHERE h.RFCS = s.RFC and NOT EXISTS ( SELECT x.IdAsunto from asuntorechazado x WHERE x.RFCS=s.RFC and x.IdAsunto=h.IdAsunto)) and s.RFC="SUBOR1" and a.Estado="En progreso."', function (_err, _rows) {
         assert.deepStrictEqual(result, _rows);
       });
     });
