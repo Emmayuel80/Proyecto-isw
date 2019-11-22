@@ -37,27 +37,24 @@
       
         <div class="tab-content">
           <div id="rechazados" class="tab-pane fade in active">
-            <%  var rechazados = 0;
-             for(let i = 0; i < asuntos.length; i++) { 
-                 if(asuntos[i].Estado === 'Rechazado.'){
-                     rechazados++;
-                 %>
+            <% var element; 
+            var rechazados = 0; %>
+            <%if (arrRechazo) { %>
+             <%for(let i = 0; i < arrRechazo.length; i++) { 
+                  element = arrRechazo[i][0];
+                   rechazados++; %>
                     <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
-                        <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
-                        <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
-                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
+                        <h2 role="button" style="margin-left: 10px"><%= element.Actividad %></h2>
+                        <div style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; ">
+                                <div style=" margin-left: 10px"><%=`Rechazado por ${element.nombre}`%></div>
                                 <br>
-                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_rechazo('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'rec'%>" style="margin-left: 10px">Mostrar por qué fue rechazado.</div>
-                                <br>
-                                <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
-                                <h4>Dias de termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %></h4>
-                                Descripción: <%= asuntos[i].Descripcion %>
+                                <div style="margin-left: 10px"><%=`Razon del rechazo: ${element.descripcion}`%></div>
                             </div>
                             <br>
                     </article>
-                    <%}
-                }
-                if(rechazados === 0){%>
+               <% } %>
+            <% } %>
+            <%if(rechazados === 0){%>
                 <h2>No hay asuntos rechazados.</h2>
             <% }%>
           </div>
