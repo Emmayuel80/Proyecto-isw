@@ -42,7 +42,9 @@
             var rechazados = 0; %>
             <%if (arrRechazo) { %>
              <%for(let i = 0; i < arrRechazo.length; i++) { 
+              if(arrRechazo[i].length !== 0){
                   element = arrRechazo[i][0];
+                  console.log(element);
                    rechazados++; %>
                     <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
                         <h2 role="button" style="margin-left: 10px"><%= element.Actividad %></h2>
@@ -53,7 +55,8 @@
                             </div>
                             <br>
                     </article>
-               <% } %>
+               <% }
+            } %>
             <% } %>
             <%if(rechazados === 0){%>
                 <h2>No hay asuntos rechazados.</h2>
