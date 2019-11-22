@@ -41,8 +41,10 @@
                 </div>
                 <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
                     <%if(actividad[i].ruta === null){ %>
-                        <a href="/profile/subirDocumento/Actividad/<%=actividad[0].IdActividad%>" class="btn btn-primary">Agregar Actividad</a>
-                    <% } %>
+                        <a href="/profile/subirDocumento/Actividad/<%=actividad[i].IdAsunto%>/<%=actividad[i].IdActividad%>" class="btn btn-primary">Adjuntar Archivo</a>
+                    <% } else { %>
+                        <a href="/download/<%=actividad[i].ruta%>" class="btn btn-primary">Descargar archivo adjunto</a>
+                        <%}%>
                 </div>
             </article>
             <%}%>
