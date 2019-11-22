@@ -70,7 +70,7 @@
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
                                <br>
-                               <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
+                               <h4>Fecha de creación:<%=formatDate(new Date(asuntos[i].FechaCreacion))%></h4>
                                <h4>Dias de termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %></h4>
                                Descripción: <%= asuntos[i].Descripcion %>
                            </div>
@@ -98,7 +98,7 @@
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
                                 <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
                                 <br>
-                                <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
+                                <h4>Fecha de creación:<%=formatDate(new Date(asuntos[i].FechaCreacion))%></h4>
                                 Descripción: <%= asuntos[i].Descripcion %>
                             </div>
                             <br>
@@ -123,7 +123,7 @@
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
                                 <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
                                 <br>
-                                <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
+                                <h4>Fecha de creación:<%=formatDate(new Date(asuntos[i].FechaCreacion))%></h4>
                                 Descripción: <%= asuntos[i].Descripcion %>
                             </div>
                             <br>
@@ -169,3 +169,18 @@
 </script>
 </body>
 </html>
+
+<% function formatDate(date) {
+    var monthNames = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+  
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+  
+    return monthNames[monthIndex] + ' ' + day + ',' + year;
+} %>
