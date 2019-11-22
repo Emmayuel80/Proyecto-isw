@@ -13,5 +13,14 @@ module.exports = function (req, idAsunto, rfcs) {
     };
     connection.query('INSERT INTO actividad SET ?', newActividad, function (_err, _rows) {
     });
+    if (req.body.asignar === 'on') {
+      var element = req.body.area;
+      var asignAsunto = {
+        IdActividad: (lastId + 1),
+        IdArea: element
+      };
+      connection.query('INSERT INTO asuntoinfo SET ?', asignAsunto, function (_err, _rows) {
+      });
+    }
   });
 };
