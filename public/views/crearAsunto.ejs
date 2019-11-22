@@ -31,13 +31,18 @@
         <input class="form-control" pattern="[0-9]+" type="tel" max="99999999999" name="DiasTermino" id="DiasTermino" title="Solo numeros.">
         </div>
         <div class="form-group">
+            <label for="DiasTermino">¿Deseas asignarselo a subordinados?</label>
+            <input class="form-control" type="checkbox" name="asignar">
+        </div>
+        <div class="form-group" id="asignacion" style="display: none;">
         <label for="RFCS">Subordinado asignado: </label>
-        <select name="RFCS" id="RFCS">
+        <p>Manten presionada la tecla Ctrl (windows) / Command (Mac) para seleccionar multiples encargados.</p>
+        <select name="RFCS" id="RFCS" multiple>
             <% if(!sub || !sub.length){%>
                 <option value="null" disabled>No tienes subordinados</option>
             <%} else {
             for (let i = 0; i < sub.length; i++) {%>
-                <option value="<%=sub[i].RFC%>"><%=`${sub[i].Nombre} ${sub[i].apPaterno} ${sub[i].apMaterno}`%></option>
+                <option value="<%=sub[i].RFC%>"><%=`${sub[i].Nombre} ${sub[i].ApPaterno} ${sub[i].ApMaterno}`%></option>
             <%}
             }%>
         </select>
@@ -46,5 +51,18 @@
     </form>
 </div>
 </div>
+<script>
+var checkbox = document.querySelector("input[name=asignar]");
+
+checkbox.addEventListener( 'change', function() {
+    if(this.checked) {
+        document.getElementById('asignacion').style.display = "block";
+        // Checkbox is checked..
+    } else {
+        document.getElementById('asignacion').style.display = "none";
+        // Checkbox is not checked..
+    }
+});
+</script>
 </body>
 </html>

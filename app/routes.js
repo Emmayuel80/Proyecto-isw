@@ -25,20 +25,25 @@ module.exports = function (app, passport) {
   // SIGNUP ==============================
   // =====================================
   // show the signup form
-  app.get('/signup', function (req, res) {
+  app.get('/profile/signup/:RFCE', isLoggedIn, function (req, res) {
     // render the page and pass in any flash data if it exists
-    res.render('signup.ejs', { message: req.flash('signupMessage') });
+    res.render('../public/views/registro.ejs', { user: req.user, message: req.flash('signupMessage') });
   });
-
+  app.post('/profile/signup/:RFCE', isLoggedIn, function (req, res) {
+    require('../config/register')(req, req.params.RFCE);
+    res.redirect('/profile');
+  });
   // =====================================
   // PROFILE SECTION =====================
   // =====================================
   // we will want this protected so you have to be logged in to visit
   // we will use route middleware to verify this (the isLoggedIn function)
   app.get('/profile', isLoggedIn, function (req, res) {
-    res.render('../public/views/profile.ejs', {
-      user: req.user // get the user out of session and pass to template
-    });
+    if (req.user.RFCE) { res.redirect('/profile/verAsuntos'); } else {
+      res.render('../public/views/profile.ejs', {
+        user: req.user // get the user out of session and pass to template
+      });
+    }
   });
 
   app.get('/profile/crearAsunto', isLoggedIn, function (req, res) {
@@ -69,12 +74,32 @@ module.exports = function (app, passport) {
     });
     // render the page and pass in any flash data if it exists
   });
+  app.get('/profile/verAsuntosPersonales', isLoggedIn, function (req, res) {
+    require('./getAsuntosEncargado')(req.user, (result) => {
+      res.render('../public/views/verAsuntosPersonales.ejs', { asuntos: result, user: req.user });
+    });
+    // render the page and pass in any flash data if it exists
+  });
 
   app.get('/profile/verAsuntosEncargado', isLoggedIn, function (req, res) {
     require('./getAllAsuntos')(req.user, (result) => {
       res.render('../public/views/verAsuntosEncargado.ejs', { asuntos: result, user: req.user });
     });
     // render the page and pass in any flash data if it exists
+  });
+  app.get('/asunto/updateSubordinados/:IdAsunto', isLoggedIn, function (req, res) {
+    require('./getSubordinadosAsignados')(req.params.IdAsunto, (result) => {
+      res.render('../public/views/updateSubordinados.ejs', { asignado: result, IdAsunto: req.params.IdAsunto, user: req.user });
+    });
+  });
+  app.get('/asunto/addSubordinados/:IdAsunto', isLoggedIn, function (req, res) {
+    require('./getSubordinadosNoAsignados')(req.params.IdAsunto, req.user.RFC, (result) => {
+      res.render('../public/views/addSubordinados.ejs', { sub: result, user: req.user, IdAsunto: req.params.IdAsunto });
+    });
+  });
+  app.post('/asunto/addSubordinados/:IdAsunto', isLoggedIn, function (req, res) {
+    require('../services/addSubordinados')(req);
+    res.redirect('/asunto/updateSubordinados/' + req.params.IdAsunto);
   });
   // =====================================
   // ACTIVIDADES ==============================

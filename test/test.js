@@ -1,15 +1,15 @@
 /* eslint-disable no-undef */
 //  Test para probar mocha framework
 const assert = require('assert');
-const createAsunto = require('../services/createAsunto');
+//  const createAsunto = require('../services/createAsunto');
 const connection = require('../config/database');
 const getAsuntos = require('../app/getAsuntos');
 const getAllAsuntos = require('../app/getAllAsuntos');
 const getSubordinados = require('../app/getSubordinados');
 const getSubordinadosAsignados = require('../app/getSubordinadosAsignados');
-const createActividad = require('../services/createActividad');
+//  const createActividad = require('../services/createActividad');
 const concluirAsunto = require('../services/concluirAsunto');
-describe('Tests de creacion de asunto', () => {
+/*  describe('Tests de creacion de asunto', () => {
   it('Debe crear un asunto con el titulo Test y descripcion Test unitario con 0 dias de termino', () => {
     createAsunto({
       body: {
@@ -37,7 +37,7 @@ describe('Tests de creacion de actividad', () => {
       assert.strictEqual(_rows[0].Nombre, 'Test');
     });
   });
-});
+}); */
 
 describe('Tests de conclusion de asunto', () => {
   it('Debe concluir el asunto con el id  0', () => {

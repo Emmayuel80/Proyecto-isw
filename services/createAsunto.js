@@ -13,11 +13,24 @@ module.exports = function (req) {
     };
     connection.query('INSERT INTO asunto SET ?', newAsunto, function (_err, _rows) {
     });
-    const asignAsunto = {
-      IdAsunto: (lastId + 1),
-      RFCS: req.body.RFCS
-    };
-    connection.query('INSERT INTO asuntosubordinado SET ?', asignAsunto, function (_err, _rows) {
-    });
+    if (req.body.asignar === 'on') {
+      for (let i = 0; i < req.body.RFCS.length; i++) {
+        var element = req.body.RFCS[i];
+        var asignAsunto = {
+          IdAsunto: (lastId + 1),
+          RFCS: element
+        };
+        connection.query('INSERT INTO asuntosubordinado SET ?', asignAsunto, function (_err, _rows) {
+        });
+      }
+    }
+    if (!req.body.asignar) {
+      var asignAsuntoE = {
+        IdAsunto: (lastId + 1),
+        RFCE: req.user.RFC
+      };
+      connection.query('INSERT INTO asuntoencargado SET ?', asignAsuntoE, function (_err, _rows) {
+      });
+    }
   });
 };

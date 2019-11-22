@@ -14,6 +14,10 @@ module.exports = function (io, Siofu) {
         io.emit('subordinados asignados', result, idAsunto);
       });
     });
+    socket.on('desasignar subordinado', (idAsunto, rfc) => {
+      require('../services/unassignSubordinado')(idAsunto, rfc);
+      io.emit('subordinado eliminado', rfc);
+    });
     socket.on('obtener rechazo', (idAsunto) => {
       require('./getInfoRechazo')(idAsunto, (result) => {
         io.emit('info rechazo', result, idAsunto);
