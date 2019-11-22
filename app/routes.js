@@ -83,7 +83,9 @@ module.exports = function (app, passport) {
 
   app.get('/profile/verAsuntosEncargado', isLoggedIn, function (req, res) {
     require('./getAllAsuntos')(req.user, (result) => {
-      res.render('../public/views/verAsuntosEncargado.ejs', { asuntos: result, user: req.user });
+      require('./getProgresoRechazado')(req.user.RFC, (arrRechazo) => {
+        res.render('../public/views/verAsuntosEncargado.ejs', { asuntos: result, user: req.user, arrRechazo: arrRechazo });
+      });
     });
     // render the page and pass in any flash data if it exists
   });
