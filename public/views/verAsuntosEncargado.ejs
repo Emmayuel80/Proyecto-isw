@@ -78,6 +78,7 @@
                                 <a href="/asunto/updateSubordinados/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Editar Subordinados Asignados</a>
                                 <a href="/asunto/suspender/<%=asuntos[i].IdAsunto%>" class="btn btn-primary warning">Suspender</a>
                                 <a href="/asunto/cancelar/<%=asuntos[i].IdAsunto%>" class="btn btn-primary danger">Cancelar</a>
+                                <button class="btn btn-success" type="submit" onclick="finalizar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Finalizar</button>
                             </div>
                            <br>
                        </article>
@@ -166,6 +167,14 @@
         document.getElementById(idAsunto + 'rec').onclick = "";
         document.getElementById(idAsunto + 'rec').role = "";
     });
+    socket.on('concluido', (asuntoId) => {
+        var parent = document.getElementById(asuntoId + 'Art');
+        parent.parentNode.removeChild(parent);
+    });
+
+    function finalizar(asuntoid, rfc){
+        socket.emit('concluir', asuntoid);
+    }
 </script>
 </body>
 </html>
