@@ -30,7 +30,7 @@
 <% if(!actividad || !actividad.length){%>
         <h2 aling="center">Este asunto aun no tiene actividades.</h2>
     <%} else { %>
-    <% if(!user.RFCE){ %>
+    <% if(user.RFCE){ %>
     <a href="/profile/verAsuntos/crearActividad/<%=actividad[0].IdAsunto%>" class="btn btn-primary">Agregar Actividad</a>
     <%}%>
     <% for(let i = 0; i < actividad.length; i++) { %>
@@ -52,7 +52,9 @@
                 </div>
                 <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
                     <%if(actividad[i].ruta === null){ %>
+                        <% if(user.RFCE){ %>
                         <a href="/profile/subirDocumento/Actividad/<%=actividad[i].IdAsunto%>/<%=actividad[i].IdActividad%>" class="btn btn-primary">Adjuntar Archivo</a>
+                        <% } %>
                     <% } else { %>
                         <a href="/download/<%=actividad[i].ruta%>" class="btn btn-primary">Descargar archivo adjunto</a>
                         <%}%>
