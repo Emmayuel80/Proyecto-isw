@@ -99,6 +99,18 @@ module.exports = function (app, passport) {
       res.render('../public/views/addSubordinados.ejs', { sub: result, user: req.user, IdAsunto: req.params.IdAsunto });
     });
   });
+  app.get('/asunto/suspender/:IdAsunto', isLoggedIn, function (req, res) {
+    require('../services/changeEstado')(req.params.IdAsunto, 3);
+    res.redirect('/profile/verAsuntosEncargado');
+  });
+  app.get('/asunto/cancelar/:IdAsunto', isLoggedIn, function (req, res) {
+    require('../services/changeEstado')(req.params.IdAsunto, 2);
+    res.redirect('/profile/verAsuntosEncargado');
+  });
+  app.get('/asunto/reanudar/:IdAsunto', isLoggedIn, function (req, res) {
+    require('../services/changeEstado')(req.params.IdAsunto, 4);
+    res.redirect('/profile/verAsuntosEncargado');
+  });
   app.post('/asunto/addSubordinados/:IdAsunto', isLoggedIn, function (req, res) {
     require('../services/addSubordinados')(req);
     res.redirect('/asunto/updateSubordinados/' + req.params.IdAsunto);
