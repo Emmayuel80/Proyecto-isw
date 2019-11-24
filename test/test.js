@@ -6,7 +6,6 @@ const connection = require('../config/database');
 const getAsuntos = require('../app/getAsuntos');
 const getAllAsuntos = require('../app/getAllAsuntos');
 const getSubordinados = require('../app/getSubordinados');
-const getSubordinadosAsignados = require('../app/getSubordinadosAsignados');
 const createActividad = require('../services/createActividad');
 const concluirAsunto = require('../services/concluirAsunto');
 describe('Tests de creacion de asunto', () => {
@@ -72,16 +71,6 @@ describe('Test de obtencion de todos los asuntos', () => {
       RFC: 'SUBOR1'
     }, (result) => {
       connection.query('select a.* from asunto a, asuntosubordinado x, subordinado s where a.IdAsunto= x.IdAsunto and x.RFCS= s.RFC and s.RFCE="SUBOR1"', (_err, _rows) => {
-        assert.deepStrictEqual(result, _rows);
-      });
-    });
-  });
-});
-
-describe('Test de obtencion de los subordinados asignados a un asunto', () => {
-  it('Debe obtener los subordinados de el asunto con id 7', () => {
-    getSubordinadosAsignados(7, (result) => {
-      connection.query('Select s.* from  subordinado s, asunto a, asuntosubordinado x where s.rfc=x.rfcs and x.idasunto=a.idasunto and a.idasunto=7', (_err, _rows) => {
         assert.deepStrictEqual(result, _rows);
       });
     });

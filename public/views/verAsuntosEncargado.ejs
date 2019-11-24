@@ -71,7 +71,7 @@
                        <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
                            <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
-                               <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
+                               <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>', '<%=user.RFC%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
                                <br>
                                <h4>Fecha de creación:<%=formatDate(new Date(asuntos[i].FechaCreacion))%></h4>
                                <h4>Dias de termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %></h4>
@@ -100,7 +100,7 @@
                        <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
                            <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
-                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
+                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>', '<%=user.RFC%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
                                 <br>
                                 <h4>Fecha de creación:<%=formatDate(new Date(asuntos[i].FechaCreacion))%></h4>
                                 Descripción: <%= asuntos[i].Descripcion %>
@@ -125,7 +125,7 @@
                        <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
                            <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
-                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
+                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>', '<%=user.RFC%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
                                 <br>
                                 <h4>Fecha de creación:<%=formatDate(new Date(asuntos[i].FechaCreacion))%></h4>
                                 Descripción: <%= asuntos[i].Descripcion %>
@@ -148,7 +148,7 @@
 
 <script>
     var socket = io();
-    function muestra_subordinados(idAsunto){
+    function muestra_subordinados(idAsunto, rfc){
     document.getElementById(idAsunto + 'Sub').innerHTML = "<i>Obteniendo subordinados...</i>";
     socket.emit('obtener subordinados', idAsunto);
     }

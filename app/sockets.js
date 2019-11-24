@@ -9,8 +9,8 @@ module.exports = function (io, Siofu) {
       require('../services/changeEstado')(asuntoId, 5);
       io.emit('concluido', asuntoId);
     });
-    socket.on('obtener subordinados', (idAsunto) => {
-      require('./getSubordinadosAsignados')(idAsunto, (result) => {
+    socket.on('obtener subordinados', (idAsunto, rfc) => {
+      require('./getSubordinadosAsignados')(idAsunto, rfc, (result) => {
         io.emit('subordinados asignados', result, idAsunto);
       });
     });
