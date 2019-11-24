@@ -31,10 +31,10 @@
         <h2 aling="center">Este asunto aun no tiene actividades.</h2>
     <%} else { %>
     <% if(user.RFCE){ %>
-    <a href="/profile/verAsuntos/crearActividad/<%=actividad[0].IdAsunto%>" class="btn btn-primary">Agregar Actividad</a>
+    <a href="/profile/verAsuntos/crearActividad/<%=actividad[0].IdAsunto%>" class="btn btn-danger">Agregar Actividad</a>
     <%}%>
     <% for(let i = 0; i < actividad.length; i++) { %>
-            <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;" id="<%=actividad[i].IdActividad + 'Art'%>">
+            <article style="border:3px solid black; border-color: #4BC4C8;border-radius: 15px; margin-top: 10px;" id="<%=actividad[i].IdActividad + 'Art'%>">
                 <div>
                     <h2 role="button" onClick="muestra_oculta('<%=actividad[i].IdActividad%>')" style="margin-left: 10px; display: inline;"><%= actividad[i].Nombre %></h2>
                 </div>
@@ -53,10 +53,10 @@
                 <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
                     <%if(actividad[i].ruta === null){ %>
                         <% if(user.RFCE){ %>
-                        <a href="/profile/subirDocumento/Actividad/<%=actividad[i].IdAsunto%>/<%=actividad[i].IdActividad%>" class="btn btn-primary">Adjuntar Archivo</a>
+                        <a href="/profile/subirDocumento/Actividad/<%=actividad[i].IdAsunto%>/<%=actividad[i].IdActividad%>" class="btn btn-info">Adjuntar Archivo</a>
                         <% } %>
                     <% } else { %>
-                        <a href="/download/<%=actividad[i].ruta%>" class="btn btn-primary">Descargar archivo adjunto</a>
+                        <a href="/download/<%=actividad[i].ruta%>" class="btn btn-success">Descargar archivo adjunto</a>
                         <%}%>
                 </div>
             </article>

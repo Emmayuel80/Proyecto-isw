@@ -46,7 +46,7 @@
                   element = arrRechazo[i][0];
                   console.log(element);
                    rechazados++; %>
-                    <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
+                    <article style="border:3px solid black; border-color: #C44435;border-radius: 15px; margin-top: 10px;">
                         <h2 role="button" style="margin-left: 10px"><%= element.Actividad %></h2>
                         <div style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; ">
                                 <div style=" margin-left: 10px"><%=`Rechazado por ${element.nombre}`%></div>
@@ -68,7 +68,7 @@
                     if(asuntos[i].Estado === 'En progreso.'){
                         progreso++;
                     %>
-                       <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
+                       <article style="border:3px solid black; border-color: #4BC4C8;border-radius: 15px; margin-top: 10px;">
                            <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
@@ -78,9 +78,9 @@
                                Descripción: <%= asuntos[i].Descripcion %>
                            </div>
                            <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
-                                <a href="/asunto/updateSubordinados/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Editar Subordinados Asignados</a>
-                                <a href="/asunto/suspender/<%=asuntos[i].IdAsunto%>" class="btn btn-primary warning">Suspender</a>
-                                <a href="/asunto/cancelar/<%=asuntos[i].IdAsunto%>" class="btn btn-primary danger">Cancelar</a>
+                                <a href="/asunto/updateSubordinados/<%=asuntos[i].IdAsunto%>" class="btn btn-info">Editar Subordinados Asignados</a>
+                                <a href="/asunto/suspender/<%=asuntos[i].IdAsunto%>" class="btn btn-warning">Suspender</a>
+                                <a href="/asunto/cancelar/<%=asuntos[i].IdAsunto%>" class="btn btn-danger">Cancelar</a>
                                 <button class="btn btn-success" type="submit" onclick="finalizar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Finalizar</button>
                             </div>
                            <br>
@@ -97,7 +97,7 @@
                     if(asuntos[i].Estado === 'Concluido.'){
                         concluido++;
                     %>
-                       <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
+                       <article style="border:3px solid black; border-color: #16BD3E;border-radius: 15px; margin-top: 10px;">
                            <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
                                 <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
@@ -107,7 +107,7 @@
                             </div>
                             <br>
                             <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
-                                    <a href="/profile/verActividades/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Ver Actividades realizadas.</a>
+                                    <a href="/profile/verActividades/<%=asuntos[i].IdAsunto%>" class="btn btn-info">Ver Actividades realizadas.</a>
                             </div>
                        </article>
                        <%}
@@ -122,7 +122,7 @@
                     if(asuntos[i].Estado === 'Suspendido.'){
                         suspendido++;
                     %>
-                       <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
+                       <article style="border:3px solid black; border-color: #C6CBC7;border-radius: 15px; margin-top: 10px;">
                            <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
                            <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
                                 <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
@@ -132,7 +132,7 @@
                             </div>
                             <br>
                             <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
-                                <a href="/asunto/reanudar/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Reanudar asunto.</a>
+                                <a href="/asunto/reanudar/<%=asuntos[i].IdAsunto%>" class="btn btn-success">Reanudar asunto.</a>
                             </div>
                        </article>
                        <%}

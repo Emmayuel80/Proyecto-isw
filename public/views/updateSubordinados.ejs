@@ -19,17 +19,21 @@
 <body>
 <div class="container">
       <header class="page-header">
+        <ul class="nav nav-pills pull-right">
+        <li class="active"><a href="/profile">Perfil</a></li>
+        <li><a href="/logout">Log out</a></li>
+        </ul>
         <h1><%=`Bienvenido ${user.Nombre}`%></h1>
-        <a href="/asunto/addSubordinados/<%=IdAsunto%>" class="btn btn-primary">Agregar Subordinados</a>
+        <a href="/asunto/addSubordinados/<%=IdAsunto%>" class="btn btn-info">Agregar Subordinados</a>
       </header>
 </div>
 <div class="container">
     <% for(let i = 0; i < asignado.length; i++) { %>
-            <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;" id="<%=asignado[i].RFC + 'Art'%>">
+            <article style="border:3px solid black; border-color: #4BC4C8;border-radius: 15px; margin-top: 10px;" id="<%=asignado[i].RFC + 'Art'%>">
                 <div>
                     <h2 style="margin-left: 10px; display: inline;"><%= `${asignado[i].Nombre} ${asignado[i].ApPaterno} ${asignado[i].ApMaterno}` %></h2>
                 <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
-                    <button class="btn btn-primary" type="submit" onclick="eliminar('<%=IdAsunto%>','<%=asignado[i].RFC%>')">Eliminar</button>
+                    <button class="btn btn-danger" type="submit" onclick="eliminar('<%=IdAsunto%>','<%=asignado[i].RFC%>')">Eliminar</button>
                 </div>
             </article>
             <%}%>
