@@ -14,13 +14,22 @@ module.exports = function (req) {
     connection.query('INSERT INTO asunto SET ?', newAsunto, function (_err, _rows) {
     });
     if (req.body.asignar === 'on') {
-      for (let i = 0; i < req.body.RFCS.length; i++) {
-        var element = req.body.RFCS[i];
-        var asignAsunto = {
+      if (Array.isArray(req.body.RFCS)) {
+        for (let i = 0; i < req.body.RFCS.length; i++) {
+          var element = req.body.RFCS[i];
+          var asignAsunto = {
+            IdAsunto: (lastId + 1),
+            RFCS: element
+          };
+          connection.query('INSERT INTO asuntosubordinado SET ?', asignAsunto, function (_err, _rows) {
+          });
+        }
+      } else {
+        var asignAsuntosimple = {
           IdAsunto: (lastId + 1),
-          RFCS: element
+          RFCS: req.body.RFCS
         };
-        connection.query('INSERT INTO asuntosubordinado SET ?', asignAsunto, function (_err, _rows) {
+        connection.query('INSERT INTO asuntosubordinado SET ?', asignAsuntosimple, function (_err, _rows) {
         });
       }
     }

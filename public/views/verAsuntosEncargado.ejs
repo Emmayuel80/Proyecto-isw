@@ -55,7 +55,8 @@
           <div id="rechazados" class="tab-pane fade in active">
             <% var element; 
             var rechazados = 0; %>
-            <%if (arrRechazo) { %>
+            <%if (arrRechazo) { 
+                console.log(arrRechazo)%>
              <%for(let i = 0; i < arrRechazo.length; i++) { 
               if(arrRechazo[i].length !== 0){
                   element = arrRechazo[i][0];
