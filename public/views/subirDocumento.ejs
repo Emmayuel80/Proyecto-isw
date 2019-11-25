@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GUM</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/siofu/client.js"></script>
+    <style>
+        body        { padding-top:80px; }
+    </style>
+</head>
+<body>
+<div class="container">
+<div class="col-sm-6 col-sm-offset-3">
+    <h1><%=user.Nombre%></h1>
+    <span id="idActividad" style="display: none;"><%=idActividad%></span>
+    <h1>Agregar Documento:</h1>
+    <form action="" method="post">
+        <div class="form-group">
+        <label for="Nombre">Archivo</label>
+        <input class="form-control" type="file" name="document" id="document" required>
+        </div>
+        <a href="/profile/verAsuntos" class="btn btn-danger btn-lg">Cancelar</a> <button class="btn btn-warning btn-lg" id="submit_file" type="submit">Adjuntar</button>
+    </form>
+</div>
+</div>
+
+<script>
+        var socket = io();
+        var uploader = new SocketIOFileUpload(socket);
+        uploader.listenOnSubmit(document.getElementById("submit_file"), document.getElementById("document"));;
+        uploader.addEventListener("start", function(event){
+            event.file.meta.idActividad = parseInt(document.getElementById('idActividad').innerText);
+        });
+</script> 
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GUM</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script>
+        function muestra_oculta(id){
+            if (document.getElementById){ //se obtiene el id
+            var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+            el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+            }
+            }
+    </script>
+</head>
+<body>
+<div class="container">
+      <header class="page-header">
+        <h1><%=`Bienvenido ${user.Nombre}`%></h1>
+        <a href="/asunto/addSubordinados/<%=IdAsunto%>" class="btn btn-primary">Agregar Subordinados</a>
+      </header>
+</div>
+<div class="container">
+    <% for(let i = 0; i < asignado.length; i++) { %>
+            <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;" id="<%=asignado[i].RFC + 'Art'%>">
+                <div>
+                    <h2 style="margin-left: 10px; display: inline;"><%= `${asignado[i].Nombre} ${asignado[i].ApPaterno} ${asignado[i].ApMaterno}` %></h2>
+                <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
+                    <button class="btn btn-primary" type="submit" onclick="eliminar('<%=IdAsunto%>','<%=asignado[i].RFC%>')">Eliminar</button>
+                </div>
+            </article>
+            <%}%>
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+    var socket = io();
+
+    function eliminar(asuntoid, rfc){
+        socket.emit('desasignar subordinado', asuntoid, rfc);
+    }
+    socket.on('subordinado eliminado', (rfc) => {
+        var parent = document.getElementById(rfc + 'Art');
+        parent.parentNode.removeChild(parent);
+    });
+
+
+
+</script>
+</body>
+</html>

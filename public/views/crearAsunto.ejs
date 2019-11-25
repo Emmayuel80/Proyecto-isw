@@ -69,10 +69,23 @@
             }%>
                     </select>
                 </div>
-                <button class="btn btn-success btn-lg" type="submit">Crear</button>
-            </form>
-        </div>
-    </div>
+        <button class="btn btn-warning btn-lg" type="submit">Crear</button>
+    </form>
+</div>
+</div>
+<script>
+var checkbox = document.querySelector("input[name=asignar]");
+
+checkbox.addEventListener( 'change', function() {
+    if(this.checked) {
+        document.getElementById('asignacion').style.display = "block";
+        // Checkbox is checked..
+    } else {
+        document.getElementById('asignacion').style.display = "none";
+        // Checkbox is not checked..
+    }
+});
+</script>
 </body>
 
 </html>

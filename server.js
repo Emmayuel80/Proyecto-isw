@@ -12,14 +12,21 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 const path = require('path');
 var io = require('socket.io')(http);
+const fs = require('fs');
+const siofu = require('socketio-file-upload');
 
 require('./config/passport')(passport); // pass passport for configuration
-
+fs.mkdir('./uploads/actividad/', { recursive: true }, (err) => {
+  if (err) throw err;
+});
+fs.mkdir('./uploads/asunto/', { recursive: true }, (err) => {
+  if (err) throw err;
+});
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser()); // get information from html forms
-
+app.use(siofu.router);
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.use(express.static(path.join(__dirname, '/assets')));
 console.log(path.join(__dirname, '/assets'));
@@ -34,6 +41,6 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // sockets =====================================================================
-require('./app/sockets')(io);
+require('./app/sockets')(io, siofu);
 http.listen(port);
 console.log('The magic happens on port ' + port);

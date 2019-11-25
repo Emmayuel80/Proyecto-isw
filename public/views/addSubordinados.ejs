@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GUM</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <style>
+        body        { padding-top:80px; }
+    </style>
+</head>
+<body>
+<div class="container">
+<div class="col-sm-6 col-sm-offset-3">
+    <h1><%=user.Nombre%></h1>
+    <a href="/asunto/updateSubordinados/<%=IdAsunto%>" class="btn btn-default btn-sm">Regresar</a>
+    <h2></h2>
+    <form action="" method="post">
+        <div class="form-group" id="asignacion">
+        <label for="RFCS">Selecciona los subordinados que deseas asignar: </label>
+        <p>Manten presionada la tecla Ctrl (windows) / Command (Mac) para seleccionar multiples encargados.</p>
+        <select name="RFCS" id="RFCS" class="form-control" multiple required>
+            <% if(!sub || !sub.length){%>
+                <option value="null" disabled>No tienes subordinados para asignar</option>
+            <%} else {
+            for (let i = 0; i < sub.length; i++) {%>
+                <option value="<%=sub[i].RFC%>"><%=`${sub[i].Nombre} ${sub[i].ApPaterno} ${sub[i].ApMaterno}`%></option>
+            <%}
+            }%>
+        </select>
+        </div>
+        <button class="btn btn-warning btn-lg" type="submit">Crear</button>
+    </form>
+</div>
+</div>
+</body>
+</html>

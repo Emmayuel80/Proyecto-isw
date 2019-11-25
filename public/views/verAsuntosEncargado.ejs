@@ -45,44 +45,35 @@
     </div>
     <div class="container">
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#rechazados">Rechazados</a></li>
-            <li><a data-toggle="tab" href="#progreso">En Progreso</a></li>
-            <li><a data-toggle="tab" href="#concluido">Concluidos</a></li>
+          <li class="active"><a data-toggle="tab" href="#rechazados">Rechazados</a></li>
+          <li><a data-toggle="tab" href="#progreso">En Progreso</a></li>
+          <li><a data-toggle="tab" href="#concluido">Concluidos</a></li>
+          <li><a data-toggle="tab" href="#suspendidos">Suspendidos</a></li>
         </ul>
 
         <div class="tab-content">
-            <div id="rechazados" class="tab-pane fade in active">
-                <%  var rechazados = 0;
-             for(let i = 0; i < asuntos.length; i++) { 
-                 if(asuntos[i].Estado === 'Rechazado.'){
-                     rechazados++;
-                 %>
-                <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
-                    <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px">
-                        <%= asuntos[i].Actividad %></h2>
-                    <div id="<%=asuntos[i].IdAsunto%>"
-                        style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
-                        <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;"
-                            role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')"
-                            id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados
-                            encargados.</div>
-                        <br>
-                        <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;"
-                            role="button" onClick="muestra_rechazo('<%=asuntos[i].IdAsunto%>')"
-                            id="<%=asuntos[i].IdAsunto + 'rec'%>" style="margin-left: 10px">Mostrar por qué fue
-                            rechazado.</div>
-                        <br>
-                        <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
-                        <h4>Dias de
-                            termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %>
-                        </h4>
-                        Descripción: <%= asuntos[i].Descripcion %>
-                    </div>
-                    <br>
-                </article>
-                <%}
-                }
-                if(rechazados === 0){%>
+          <div id="rechazados" class="tab-pane fade in active">
+            <% var element; 
+            var rechazados = 0; %>
+            <%if (arrRechazo) { %>
+             <%for(let i = 0; i < arrRechazo.length; i++) { 
+              if(arrRechazo[i].length !== 0){
+                  element = arrRechazo[i][0];
+                  console.log(element);
+                   rechazados++; %>
+                    <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
+                        <h2 role="button" style="margin-left: 10px"><%= element.Actividad %></h2>
+                        <div style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; ">
+                                <div style=" margin-left: 10px"><%=`Rechazado por ${element.nombre}`%></div>
+                                <br>
+                                <div style="margin-left: 10px"><%=`Razon del rechazo: ${element.descripcion}`%></div>
+                            </div>
+                            <br>
+                    </article>
+               <% }
+            } %>
+            <% } %>
+            <%if(rechazados === 0){%>
                 <h2>No hay asuntos rechazados.</h2>
                 <% }%>
             </div>
@@ -92,25 +83,25 @@
                     if(asuntos[i].Estado === 'En progreso.'){
                         progreso++;
                     %>
-                <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
-                    <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px">
-                        <%= asuntos[i].Actividad %></h2>
-                    <div id="<%=asuntos[i].IdAsunto%>"
-                        style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
-                        <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;"
-                            role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')"
-                            id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados
-                            encargados.</div>
-                        <br>
-                        <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
-                        <h4>Dias de
-                            termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %>
-                        </h4>
-                        Descripción: <%= asuntos[i].Descripcion %>
-                    </div>
-                    <br>
-                </article>
-                <%}
+                       <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
+                           <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
+                           <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
+                               <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>', '<%=user.RFC%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
+                               <br>
+                               <h4>Fecha de creación:<%=formatDate(new Date(asuntos[i].FechaCreacion))%></h4>
+                               <h4>Dias de termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %></h4>
+                               Descripción: <%= asuntos[i].Descripcion %>
+                           </div>
+                           <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
+                                <a href="/asunto/updateSubordinados/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Editar Subordinados Asignados</a>
+                                <a href="/asunto/suspender/<%=asuntos[i].IdAsunto%>" class="btn btn-primary btn-warning">Suspender</a>
+                                <a href="/asunto/cancelar/<%=asuntos[i].IdAsunto%>" class="btn btn-primary btn-danger">Cancelar</a>
+                                <button class="btn btn-success" type="submit" onclick="finalizar('<%=asuntos[i].IdAsunto%>','<%=asuntos[i].RFC%>')">Finalizar</button>
+                            </div>
+                           <br>
+                       </article>
+                       <%}
+
                    }
                    if(progreso === 0){%>
                 <h2>No hay asuntos en progreso.</h2>
@@ -122,60 +113,103 @@
                     if(asuntos[i].Estado === 'Concluido.'){
                         concluido++;
                     %>
-                <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
-                    <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px">
-                        <%= asuntos[i].Actividad %></h2>
-                    <div id="<%=asuntos[i].IdAsunto%>"
-                        style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
-                        <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;"
-                            role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>')"
-                            id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados
-                            encargados.</div>
-                        <br>
-                        <h4>Fecha de creación:<%=asuntos[i].FechaCreacion%></h4>
-                        <h4>Dias de
-                            termino:<%=((parseInt(asuntos[i].DiasTermino) === -1) ? 'Concluido' : asuntos[i].DiasTermino) %>
-                        </h4>
-                        Descripción: <%= asuntos[i].Descripcion %>
-                    </div>
-                    <br>
-                </article>
-                <%}
+                       <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
+                           <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
+                           <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
+                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>', '<%=user.RFC%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
+                                <br>
+                                <h4>Fecha de creación:<%=formatDate(new Date(asuntos[i].FechaCreacion))%></h4>
+                                Descripción: <%= asuntos[i].Descripcion %>
+                            </div>
+                            <br>
+                            <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
+                                    <a href="/profile/verActividades/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Ver Actividades realizadas.</a>
+                            </div>
+                       </article>
+                       <%}
                    }
                    if(concluido === 0){%>
-                <h2>No hay asuntos concluidos.</h2>
-                <% }%>
-            </div>
+                   <h2>No hay asuntos concluidos.</h2>
+               <% }%>
+          </div>
+          <div id="suspendidos" class="tab-pane fade">
+                <%  var suspendido = 0;
+                for(let i = 0; i < asuntos.length; i++) { 
+                    if(asuntos[i].Estado === 'Suspendido.'){
+                        suspendido++;
+                    %>
+                       <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;">
+                           <h2 role="button" onClick="muestra_oculta('<%=asuntos[i].IdAsunto%>')" style="margin-left: 10px"><%= asuntos[i].Actividad %></h2>
+                           <div id="<%=asuntos[i].IdAsunto%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; display: none;">
+                                <div style="border:3px solid black; border-color: #00a6cf;border-radius: 15px; margin-top: 10px;" role="button" onClick="muestra_subordinados('<%=asuntos[i].IdAsunto%>', '<%=user.RFC%>')" id="<%=asuntos[i].IdAsunto + 'Sub'%>" style="margin-left: 10px">Mostrar Subordinados encargados.</div>
+                                <br>
+                                <h4>Fecha de creación:<%=formatDate(new Date(asuntos[i].FechaCreacion))%></h4>
+                                Descripción: <%= asuntos[i].Descripcion %>
+                            </div>
+                            <br>
+                            <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
+                                <a href="/asunto/reanudar/<%=asuntos[i].IdAsunto%>" class="btn btn-primary">Reanudar asunto.</a>
+                            </div>
+                       </article>
+                       <%}
+                   }
+                   if(suspendido === 0){%>
+                   <h2>No hay asuntos suspendidos.</h2>
+               <% }%>
+          </div>
         </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
 
-    <script>
-        var socket = io();
-        function muestra_subordinados(idAsunto) {
-            document.getElementById(idAsunto + 'Sub').innerHTML = "<i>Obteniendo subordinados...</i>";
-            socket.emit('obtener subordinados', idAsunto);
-        }
-        function muestra_rechazo(idAsunto) {
-            document.getElementById(idAsunto + 'rec').innerHTML = "<i>Obteniendo informacion de rechazo...</i>";
-            socket.emit('obtener rechazo', idAsunto);
-        }
-        socket.on('subordinados asignados', (result, idAsunto) => {
-            document.getElementById(idAsunto + 'Sub').innerHTML = "Subordinados asignados al asunto: <br>";
-            for (let subor = 0; subor < result.length; subor++) {
-                var element = result[subor];
-                document.getElementById(idAsunto + 'Sub').innerHTML += `<i>${element.ApPaterno} ${element.ApMaterno} ${element.Nombre}</i> <br>`;
-            }
-            document.getElementById(idAsunto + 'Sub').onclick = "";
-            document.getElementById(idAsunto + 'Sub').role = "";
-        });
-        socket.on('info rechazo', (result, idAsunto) => {
-            document.getElementById(idAsunto + 'rec').innerHTML = `<b>Subordinado que rechazó el asunto:</b> <br> <i>${result[0].nombre}</i> <br> <b>Razón del rechazo:</b> <br> <i>${result[0].descripcion}</i> <br>`;
-            document.getElementById(idAsunto + 'rec').onclick = "";
-            document.getElementById(idAsunto + 'rec').role = "";
-        });
-    </script>
-</body>
 
+<script>
+    var socket = io();
+    function muestra_subordinados(idAsunto, rfc){
+    document.getElementById(idAsunto + 'Sub').innerHTML = "<i>Obteniendo subordinados...</i>";
+    socket.emit('obtener subordinados', idAsunto);
+    }
+    function muestra_rechazo(idAsunto){
+    document.getElementById(idAsunto + 'rec').innerHTML = "<i>Obteniendo informacion de rechazo...</i>";
+    socket.emit('obtener rechazo', idAsunto);
+    }
+    socket.on('subordinados asignados', (result, idAsunto) => {
+        document.getElementById(idAsunto + 'Sub').innerHTML = "Subordinados asignados al asunto: <br>";
+        for (let subor = 0; subor < result.length; subor++) {
+            var element = result[subor];
+            document.getElementById(idAsunto + 'Sub').innerHTML += `<i>${element.ApPaterno} ${element.ApMaterno} ${element.Nombre}</i> <br>`;
+        }
+        document.getElementById(idAsunto + 'Sub').onclick = "";
+        document.getElementById(idAsunto + 'Sub').role = "";
+    });
+    socket.on('info rechazo', (result, idAsunto) => {
+        document.getElementById(idAsunto + 'rec').innerHTML = `<b>Subordinado que rechazó el asunto:</b> <br> <i>${result[0].nombre}</i> <br> <b>Razón del rechazo:</b> <br> <i>${result[0].descripcion}</i> <br>`;
+        document.getElementById(idAsunto + 'rec').onclick = "";
+        document.getElementById(idAsunto + 'rec').role = "";
+    });
+    socket.on('concluido', (asuntoId) => {
+        var parent = document.getElementById(asuntoId + 'Art');
+        parent.parentNode.removeChild(parent);
+    });
+
+    function finalizar(asuntoid, rfc){
+        socket.emit('concluir', asuntoid);
+    }
+</script>
+</body>
 </html>
+
+<% function formatDate(date) {
+    var monthNames = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+  
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+  
+    return monthNames[monthIndex] + ' ' + day + ',' + year;
+} %>

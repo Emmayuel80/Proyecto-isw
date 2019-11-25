@@ -6,7 +6,6 @@ const connection = require('../config/database');
 const getAsuntos = require('../app/getAsuntos');
 const getAllAsuntos = require('../app/getAllAsuntos');
 const getSubordinados = require('../app/getSubordinados');
-const getSubordinadosAsignados = require('../app/getSubordinadosAsignados');
 const createActividad = require('../services/createActividad');
 const concluirAsunto = require('../services/concluirAsunto');
 describe('Tests de creacion de asunto', () => {
@@ -16,7 +15,12 @@ describe('Tests de creacion de asunto', () => {
         Actividad: 'Test',
         Descripcion: 'Test unitario',
         DiasTermino: 0,
-        RFCS: 'null'
+        RFCS: 'null',
+        asignar: undefined
+
+      },
+      user: {
+        RFC: 'TEST'
       }
     });
     connection.query('select Actividad from asunto where Actividad = "Test" and Descripcion = "Test unitario"', function (_err, _rows) {
@@ -30,7 +34,8 @@ describe('Tests de creacion de actividad', () => {
     createActividad({
       body: {
         Nombre: 'Test',
-        DescripcionActividad: 'Test unitario'
+        DescripcionActividad: 'Test unitario',
+        asignar: undefined
       }
     }, 0, 'SUBOR1');
     connection.query('select Nombre from actividad where Nombre = "Test" and Descripcion ="Test unitario"', function (_err, _rows) {
@@ -53,7 +58,7 @@ describe('Test de obtencion de asuntos', () => {
     getAsuntos({
       RFC: 'SUBOR1'
     }, (result) => {
-      connection.query('select a.Actividad, a.Descripcion, a.IdAsunto, a.Estado, a.DiasTermino, s.RFC from asunto a, asuntosubordinado x, subordinado s where a.Estado="En progreso." and a.IdAsunto= x.IdAsunto and x.RFCS= s.RFC and s.RFC= "SUBOR1"', (_err, _rows) => {
+      connection.query('select a.* from asunto a, subordinado s where a.IdAsunto in ( SELECT h.IdAsunto from asuntosubordinado h WHERE h.RFCS = s.RFC and NOT EXISTS ( SELECT x.IdAsunto from asuntorechazado x WHERE x.RFCS=s.RFC and x.IdAsunto=h.IdAsunto)) and s.RFC="SUBOR1" and a.Estado="En progreso."', function (_err, _rows) {
         assert.deepStrictEqual(result, _rows);
       });
     });
@@ -66,16 +71,6 @@ describe('Test de obtencion de todos los asuntos', () => {
       RFC: 'SUBOR1'
     }, (result) => {
       connection.query('select a.* from asunto a, asuntosubordinado x, subordinado s where a.IdAsunto= x.IdAsunto and x.RFCS= s.RFC and s.RFCE="SUBOR1"', (_err, _rows) => {
-        assert.deepStrictEqual(result, _rows);
-      });
-    });
-  });
-});
-
-describe('Test de obtencion de los subordinados asignados a un asunto', () => {
-  it('Debe obtener los subordinados de el asunto con id 7', () => {
-    getSubordinadosAsignados(7, (result) => {
-      connection.query('Select s.* from  subordinado s, asunto a, asuntosubordinado x where s.rfc=x.rfcs and x.idasunto=a.idasunto and a.idasunto=7', (_err, _rows) => {
         assert.deepStrictEqual(result, _rows);
       });
     });

@@ -25,20 +25,25 @@ module.exports = function (app, passport) {
   // SIGNUP ==============================
   // =====================================
   // show the signup form
-  app.get('/signup', function (req, res) {
+  app.get('/profile/signup/:RFCE', isLoggedIn, function (req, res) {
     // render the page and pass in any flash data if it exists
-    res.render('signup.ejs', { message: req.flash('signupMessage') });
+    res.render('../public/views/registro.ejs', { user: req.user, message: req.flash('signupMessage') });
   });
-
+  app.post('/profile/signup/:RFCE', isLoggedIn, function (req, res) {
+    require('../config/register')(req, req.params.RFCE);
+    res.redirect('/profile');
+  });
   // =====================================
   // PROFILE SECTION =====================
   // =====================================
   // we will want this protected so you have to be logged in to visit
   // we will use route middleware to verify this (the isLoggedIn function)
   app.get('/profile', isLoggedIn, function (req, res) {
-    res.render('../public/views/profile.ejs', {
-      user: req.user // get the user out of session and pass to template
-    });
+    if (req.user.RFCE) { res.redirect('/profile/verAsuntos'); } else {
+      res.render('../public/views/profile.ejs', {
+        user: req.user // get the user out of session and pass to template
+      });
+    }
   });
 
   app.get('/profile/crearAsunto', isLoggedIn, function (req, res) {
@@ -69,16 +74,54 @@ module.exports = function (app, passport) {
     });
     // render the page and pass in any flash data if it exists
   });
-
-  app.get('/profile/verAsuntosEncargado', isLoggedIn, function (req, res) {
-    require('./getAllAsuntos')(req.user, (result) => {
-      res.render('../public/views/verAsuntosEncargado.ejs', { asuntos: result, user: req.user });
+  app.get('/profile/verAsuntosPersonales', isLoggedIn, function (req, res) {
+    require('./getAsuntosEncargado')(req.user, (result) => {
+      res.render('../public/views/verAsuntosPersonales.ejs', { asuntos: result, user: req.user });
     });
     // render the page and pass in any flash data if it exists
   });
 
+  app.get('/profile/verAsuntosEncargado', isLoggedIn, function (req, res) {
+    require('./getAllAsuntos')(req.user, (result) => {
+      require('./getProgresoRechazado')(req.user.RFC, (arrRechazo) => {
+        res.render('../public/views/verAsuntosEncargado.ejs', { asuntos: result, user: req.user, arrRechazo: arrRechazo });
+      });
+    });
+    // render the page and pass in any flash data if it exists
+  });
+  app.get('/asunto/updateSubordinados/:IdAsunto', isLoggedIn, function (req, res) {
+    require('./getSubordinadosAsignados')(req.params.IdAsunto, (result) => {
+      res.render('../public/views/updateSubordinados.ejs', { asignado: result, IdAsunto: req.params.IdAsunto, user: req.user });
+    });
+  });
+  app.get('/asunto/addSubordinados/:IdAsunto', isLoggedIn, function (req, res) {
+    require('./getSubordinadosNoAsignados')(req.params.IdAsunto, req.user.RFC, (result) => {
+      res.render('../public/views/addSubordinados.ejs', { sub: result, user: req.user, IdAsunto: req.params.IdAsunto });
+    });
+  });
+  app.get('/asunto/suspender/:IdAsunto', isLoggedIn, function (req, res) {
+    require('../services/changeEstado')(req.params.IdAsunto, 3);
+    res.redirect('/profile/verAsuntosEncargado');
+  });
+  app.get('/asunto/cancelar/:IdAsunto', isLoggedIn, function (req, res) {
+    require('../services/changeEstado')(req.params.IdAsunto, 2);
+    res.redirect('/profile/verAsuntosEncargado');
+  });
+  app.get('/asunto/reanudar/:IdAsunto', isLoggedIn, function (req, res) {
+    require('../services/changeEstado')(req.params.IdAsunto, 4);
+    res.redirect('/profile/verAsuntosEncargado');
+  });
+  app.post('/asunto/addSubordinados/:IdAsunto', isLoggedIn, function (req, res) {
+    require('../services/addSubordinados')(req);
+    res.redirect('/asunto/updateSubordinados/' + req.params.IdAsunto);
+  });
+  // =====================================
+  // ACTIVIDADES ==============================
+  // =====================================
   app.get('/profile/verAsuntos/crearActividad/:idAsunto', isLoggedIn, function (req, res) {
-    res.render('../public/views/crearActividad.ejs', { idAsunto: req.params.idAsunto, user: req.user });
+    require('./getAreas')((result) => {
+      res.render('../public/views/crearActividad.ejs', { idAsunto: req.params.idAsunto, user: req.user, area: result });
+    });
     // render the page and pass in any flash data if it exists
   });
   app.post('/profile/verAsuntos/crearActividad/:idAsunto', isLoggedIn, function (req, res) {
@@ -86,8 +129,40 @@ module.exports = function (app, passport) {
     res.redirect('/profile');
     // render the page and pass in any flash data if it exists
   });
+  app.get('/profile/verActividades/:idAsunto', isLoggedIn, function (req, res) {
+    require('./getAllActividades')(req.params.idAsunto, (result) => {
+      require('./getColaboracionAreas')(result, (collab) => {
+        res.render('../public/views/verActividades.ejs', { actividad: result, user: req.user, collab: collab });
+      });
+    });
+  });
+  app.get('/profile/subirDocumento/Actividad/:idAsunto/:idActividad', isLoggedIn, function (req, res) {
+    res.render('../public/views/subirDocumento.ejs', { idActividad: req.params.idActividad, user: req.user });
+    // render the page and pass in any flash data if it exists
+  });
+  app.post('/profile/subirDocumento/Actividad/:idAsunto/:idActividad', isLoggedIn, function (req, res) {
+    res.redirect('/profile/verActividades/' + req.params.idAsunto);
+    // render the page and pass in any flash data if it exists
+  });
+  // =====================================
+  // DESCARGA ==============================
+  // =====================================
+  app.get('/download/:folder/:actividad/:id/:file', function (req, res) {
+    const file = `./${req.params.folder}/${req.params.actividad}/${req.params.id}/${req.params.file}`;
+    res.download(file); // Set disposition and send it.
+  });
+  // =====================================
+  // DOCUMENTO DE ASUNTO ==============================
+  // =====================================
+  app.get('/profile/subirDocumentoA/Asunto/:idAsunto', isLoggedIn, function (req, res) {
+    res.render('../public/views/subirDocumentoA.ejs', { idAsunto: req.params.idAsunto, user: req.user });
+    // render the page and pass in any flash data if it exists
+  });
+  app.post('/profile/subirDocumentoA/Asunto/:idAsunto', isLoggedIn, function (req, res) {
+    res.redirect('/profile/verActividades/' + req.params.idAsunto);
+    // render the page and pass in any flash data if it exists
+  });
 };
-
 // route middleware to make sure a user is logged in
 function isLoggedIn (req, res, next) {
   // if user is authenticated in the session, carry on

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GUM</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script>
+        function muestra_oculta(id){
+            if (document.getElementById){ //se obtiene el id
+            var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+            el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+            }
+            }
+    </script>
+</head>
+<body>
+<div class="container">
+      <header class="page-header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="/profile">Perfil</a></li>
+          <li><a href="/logout">Log out</a></li>
+        </ul>
+        <h1><%=`Bienvenido ${user.Nombre}`%></h1>
+      </header>
+</div>
+<div class="container">
+<% if(!actividad || !actividad.length){%>
+        <h2 aling="center">Este asunto aun no tiene actividades.</h2>
+    <%} else { %>
+    <% if(user.RFCE){ %>
+    <a href="/profile/verAsuntos/crearActividad/<%=actividad[0].IdAsunto%>" class="btn btn-primary">Agregar Actividad</a>
+    <%}%>
+    <% for(let i = 0; i < actividad.length; i++) { %>
+            <article style="border:3px solid black; border-color: blue;border-radius: 15px; margin-top: 10px;" id="<%=actividad[i].IdActividad + 'Art'%>">
+                <div>
+                    <h2 role="button" onClick="muestra_oculta('<%=actividad[i].IdActividad%>')" style="margin-left: 10px; display: inline;"><%= actividad[i].Nombre %></h2>
+                </div>
+                <div id="<%=actividad[i].IdActividad%>" style="word-wrap: break-word; word-break: break-all; margin-right: 10px; margin-left: 10px; margin-top: 5px; display: none;">
+                    <% for (let g = 0; g < collab.length; g++) {
+                        if(collab[g].length !== 0){
+                        const element = collab[g][0];
+                        if(element.IdActividad === actividad[i].IdActividad){ %>
+                        <div style=" margin-left: 10px"><%=`En colaboracion con el area: ${element.nombre}`%></div>
+                    <%}
+                        }
+                 } %>
+                 <br>
+                    <%= actividad[i].Descripcion %>
+                </div>
+                <div style="text-align: right; margin-right: 10px; margin-bottom: 10px">
+                    <%if(actividad[i].ruta === null){ %>
+                        <% if(user.RFCE){ %>
+                        <a href="/profile/subirDocumento/Actividad/<%=actividad[i].IdAsunto%>/<%=actividad[i].IdActividad%>" class="btn btn-primary">Adjuntar Archivo</a>
+                        <% } %>
+                    <% } else { %>
+                        <a href="/download/<%=actividad[i].ruta%>" class="btn btn-primary">Descargar archivo adjunto</a>
+                        <%}%>
+                </div>
+            </article>
+            <%}%>
+    <% } %>
+</div>
+
+
+</body>
+</html>
